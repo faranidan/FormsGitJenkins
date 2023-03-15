@@ -11,7 +11,7 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="Test1" preserve-order="true">
+	<test name="Test2" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
 				<methods>
@@ -21,7 +21,7 @@
 		</classes>
 	</test> 
 
-	<test name="Test2" preserve-order="true">
+	<test name="Test3" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.BuildForms">
 				<methods>
