@@ -170,10 +170,9 @@ public class FormEditorObjects extends BasePage {
 	public void previewDone() throws InterruptedException, IOException {
 		ExtentManager.log("Starting previewDone test...");
 		getPrvwDone().click();
-		waitForInvisibility(getPrvwDone(), Duration.ofSeconds(9));
+		waitForElement(formEndImg, Duration.ofSeconds(9));
 		Assert.assertEquals(getDriver().getTitle(), "Thank You");
 		ExtentManager.pass("Got to 'Thank You' page, form ended successfully");
-		getDriver().close();
 	}
 
 	public void devTools(String url) throws InterruptedException, IOException {
@@ -202,28 +201,28 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		act.moveToElement(fddItem1).click(fddItem1).perform();
 		act.moveToElement(dropdown1).click(dropdown1).perform();
-		waitForElement(dd1Item2,Duration.ofSeconds(9));
+		waitForElement(dd1Item2, Duration.ofSeconds(9));
 		dd1Item2.click();
 		Thread.sleep(600);
 		autocomplete1.click();
-		waitForElement(ac1Item3,Duration.ofSeconds(3));
+		waitForElement(ac1Item3, Duration.ofSeconds(3));
 		ac1Item3.click();
 		multiSelect1.click();
 		ms1Item4.click();
 		ms1Item5.click();
 		ExtentManager.pass("Selected fields for fatherDropdown, dropdown1 & autocomplete1 successfully");
 	}
-	
+
 	public void dropdownFill2() throws InterruptedException, IOException {
 		ExtentManager.log("Starting dropdownFill2 test...");
 		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
 		Thread.sleep(3600);
-		//waitForElement(dd2Item1,Duration.ofSeconds(12));
+		// waitForElement(dd2Item1,Duration.ofSeconds(12));
 		dd2Item1.click();
 		autocomplete2.click();
 		Thread.sleep(600);
-		//waitForElement(ac2Item1,Duration.ofSeconds(6));
+		// waitForElement(ac2Item1,Duration.ofSeconds(6));
 		ac2Item1.click();
 		multiSelect2.click();
 		ms2Item1.click();
@@ -252,7 +251,7 @@ public class FormEditorObjects extends BasePage {
 		} else {
 			ExtentManager.fail("Multi-Select1 field DID NOT clear");
 		}
-		
+
 		Thread.sleep(4500);
 		ExtentManager.log("Autocoplete2 text: " + autocomplete2.getAttribute("placeholder"));
 		ExtentManager.log("Dropdown2 text: " + dropdown2.getAttribute("placeholder"));
@@ -299,7 +298,7 @@ public class FormEditorObjects extends BasePage {
 			ExtentManager.pass("Multi-select1 data cleared");
 		}
 	}
-	
+
 	public void dropdownDataClear2() throws InterruptedException {
 		ExtentManager.log("Starting dropdownDataClear2 test...");
 		formHeader.click();
@@ -327,30 +326,56 @@ public class FormEditorObjects extends BasePage {
 			ExtentManager.pass("Multi-select2 data cleared");
 		}
 	}
-	
-	@FindBy(css=".ms1 .v-select__selection--comma") WebElement ms1Selected;
-	@FindBy(css=".ms2 .v-select__selection--comma") WebElement ms2Selected;
-	@FindBy(css="#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title") WebElement dd2Item1;
-	@FindBy(css="#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title") public WebElement ac2Item1;
-	@FindBy(css="#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link") public WebElement ms2Item1;
-	@FindBy(css = "[aria-label='Dropdown2 - ListApi ']") public WebElement dropdown2;
-	@FindBy(css = "[aria-label='Dropdown - ListApi ']") public WebElement dropdown1;
-	@FindBy(css="[aria-label='Autocomplete - ListObjApi ']") public WebElement autocomplete1;
-	@FindBy(css=".ms1 .v-select__selections") public WebElement multiSelect1;
-	@FindBy(css="[aria-label='Autocomplete2 - ListObjApi ']") public WebElement autocomplete2;
-	@FindBy(css=".ddf .v-select__selections") public WebElement fatherDropdown;
-	@FindBy(css=".ms2 .v-select__selections") public WebElement multiSelect2;
-	@FindBy(css="div:nth-of-type(14) > .theme--light.v-card.v-select-list > div[role='list'] > div:nth-of-type(1)") 
-		public WebElement fddItem1;
-	@FindBy(css="#app div:nth-of-type(12) [role='listitem']:nth-of-type(2) .v-list__tile__title") public WebElement dd1Item2;
-	@FindBy(css="#app div:nth-of-type(10) [role='listitem']:nth-of-type(3) .v-list__tile__title") public WebElement ac1Item3;
-	
-	@FindBy(css="#app div:nth-of-type(8) [role='listitem']:nth-of-type(4) .v-list__tile--link") public WebElement ms1Item4;
-	@FindBy(css="#app div:nth-of-type(8) [role='listitem']:nth-of-type(5) .v-list__tile--link") public WebElement ms1Item5;
-	@FindBy(css=".ddf .material-icons") public WebElement fddClear;
-	@FindBy(css=".block_lezusi58 [tabindex]") public WebElement formHeader;
 
-	@FindBy(css = ".n2sums.v-tooltip.v-tooltip--bottom input[type='text']") public WebElement prvwSum2Input;
+	public String input1 = "one";
+	public String input2 = "two";
+	public String input3 = "sum1";
+	public String input4 = "n2sums";
+
+	@FindBy(css = "img[alt='CallVU']")
+	WebElement formEndImg;
+	@FindBy(css = ".ms1 .v-select__selection--comma")
+	WebElement ms1Selected;
+	@FindBy(css = ".ms2 .v-select__selection--comma")
+	WebElement ms2Selected;
+	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title")
+	WebElement dd2Item1;
+	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title")
+	public WebElement ac2Item1;
+	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link")
+	public WebElement ms2Item1;
+	@FindBy(css = "[aria-label='Dropdown2 - ListApi ']")
+	public WebElement dropdown2;
+	@FindBy(css = "[aria-label='Dropdown - ListApi ']")
+	public WebElement dropdown1;
+	@FindBy(css = "[aria-label='Autocomplete - ListObjApi ']")
+	public WebElement autocomplete1;
+	@FindBy(css = ".ms1 .v-select__selections")
+	public WebElement multiSelect1;
+	@FindBy(css = "[aria-label='Autocomplete2 - ListObjApi ']")
+	public WebElement autocomplete2;
+	@FindBy(css = ".ddf .v-select__selections")
+	public WebElement fatherDropdown;
+	@FindBy(css = ".ms2 .v-select__selections")
+	public WebElement multiSelect2;
+	@FindBy(css = "div:nth-of-type(14) > .theme--light.v-card.v-select-list > div[role='list'] > div:nth-of-type(1)")
+	public WebElement fddItem1;
+	@FindBy(css = "#app div:nth-of-type(12) [role='listitem']:nth-of-type(2) .v-list__tile__title")
+	public WebElement dd1Item2;
+	@FindBy(css = "#app div:nth-of-type(10) [role='listitem']:nth-of-type(3) .v-list__tile__title")
+	public WebElement ac1Item3;
+
+	@FindBy(css = "#app div:nth-of-type(8) [role='listitem']:nth-of-type(4) .v-list__tile--link")
+	public WebElement ms1Item4;
+	@FindBy(css = "#app div:nth-of-type(8) [role='listitem']:nth-of-type(5) .v-list__tile--link")
+	public WebElement ms1Item5;
+	@FindBy(css = ".ddf .material-icons")
+	public WebElement fddClear;
+	@FindBy(css = ".block_lezusi58 [tabindex]")
+	public WebElement formHeader;
+
+	@FindBy(css = ".n2sums.v-tooltip.v-tooltip--bottom input[type='text']")
+	public WebElement prvwSum2Input;
 	@FindBy(css = ".form-help-action-button.v-btn--depressed.theme--dark .v-btn__content")
 	public WebElement rulesBtn;
 	@FindBy(css = ".theme--light.v-card.v-sheet > div[role='list'] > div")
