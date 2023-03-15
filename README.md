@@ -2,14 +2,10 @@
 
 Agenda: 
 1. Run tests on Jenkins with GitHub as the workspace source.
-	Why- 
-		Write new tests and merge them to the main repo. Track version changes. Access projects via Jenkins remotely
-	How-
-		Connect git to local machine. Sync with GitHub. Sync with Jenkins. Sync with VScode. Fix pom.xml file. Add external Jars
-End goal- 
-	CI/CD pipelines for the automated tests to run on each version release.
-News-
-	Success! Managed to run a Jenkins job with GitHub as a source, and HTML reports of ExtentReports! 
+1.1 Why- Write new tests and merge them to the main repo. Track version changes. Access projects via Jenkins remotely
+1.2 How- Connect git to local machine. Sync with GitHub. Sync with Jenkins. Sync with VScode. Fix pom.xml file. Add external Jars
+1.3 End goal- CI/CD pipelines for the automated tests to run on each version release.
+1.4 News- Success! Managed to run a Jenkins job with GitHub as a source, and HTML reports of ExtentReports! 
 
 
 2. Run Jenkins independently as a service on qa19 with an ip address
