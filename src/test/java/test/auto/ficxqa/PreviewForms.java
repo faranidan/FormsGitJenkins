@@ -3,6 +3,8 @@ package test.auto.ficxqa;
 import java.io.IOException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import base.ExtentManager;
 import base.Hooks;
 import pageObjects.FormEditorObjects;
 
@@ -17,6 +19,7 @@ public class PreviewForms extends Hooks {
 	@Test
 	public void previewSum() throws InterruptedException, IOException {
 		FormEditorObjects forms = new FormEditorObjects();
+		ExtentManager.log("STARTING previwSum test...");
 		forms.openSavedForm("Automation.v3");
 		forms.getPreviewForm().click();
 		Thread.sleep(3000);
@@ -29,6 +32,7 @@ public class PreviewForms extends Hooks {
 	@Test
 	public void previewDropdown() throws IOException, InterruptedException {
 		FormEditorObjects forms = new FormEditorObjects();
+		ExtentManager.log("STARTING previwDropdown test...");
 		forms.openSavedForm("idanActionsDD");
 		forms.getPreviewForm().click();
 		Thread.sleep(3000);

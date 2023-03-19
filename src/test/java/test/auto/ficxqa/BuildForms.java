@@ -3,6 +3,8 @@ package test.auto.ficxqa;
 import java.io.IOException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import base.ExtentManager;
 import base.Hooks;
 import pageObjects.FormEditorObjects;
 
@@ -17,6 +19,7 @@ public class BuildForms extends Hooks {
 	@Test
 	public void buildSumApi() throws InterruptedException, IOException {
 		FormEditorObjects forms = new FormEditorObjects();
+		ExtentManager.log("STARTING buildSumApi test...");
 		forms.renameFormTitleBlock("Auto SumAPI", "Page1", "Block1");
 		forms.addShortText(forms.input4);
 		forms.addShortText(forms.input3);
