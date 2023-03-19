@@ -234,34 +234,50 @@ public class FormEditorObjects extends BasePage {
 		fddClear.click();
 		ExtentManager.pass("Cleared fatherDropdown");
 		Thread.sleep(4500);
-		ExtentManager.log("Autocoplete1 text: " + autocomplete1.getAttribute("placeholder"));
-		ExtentManager.log("Dropdown1 text: " + dropdown1.getAttribute("placeholder"));
-		if (autocomplete1.getAttribute("placeholder").contains("Start typing")) {
-			ExtentManager.pass("Autocomplete1 field cleared");
+		if (autocomplete1.getAttribute("placeholder") != null) {
+			ExtentManager.log("Autocoplete1 text: " + autocomplete1.getAttribute("placeholder"));
+			if (autocomplete1.getAttribute("placeholder").contains("Start typing")) {
+				ExtentManager.pass("Autocomplete1 field cleared");
+			} else {
+				ExtentManager.fail("Autocomplete1 field DID NOT clear");
+			}
 		} else {
 			ExtentManager.fail("Autocomplete1 field DID NOT clear");
 		}
-		if (dropdown1.getAttribute("placeholder").contains("Please Select")) {
-			ExtentManager.pass("Dropdown1 field cleared");
+		if (dropdown1.getAttribute("placeholder") != null) {
+			ExtentManager.log("Dropdown1 text: " + dropdown1.getAttribute("placeholder"));
+			if (dropdown1.getAttribute("placeholder").contains("Please Select")) {
+				ExtentManager.pass("Dropdown1 field cleared");
+			} else {
+				ExtentManager.fail("Dropdown1 field DID NOT clear");
+			}
 		} else {
 			ExtentManager.fail("Dropdown1 field DID NOT clear");
 		}
+
 		if (!ms1Selected.isDisplayed()) {
 			ExtentManager.pass("Multi-Select1 field cleared");
 		} else {
 			ExtentManager.fail("Multi-Select1 field DID NOT clear");
 		}
 
-		Thread.sleep(4500);
-		ExtentManager.log("Autocoplete2 text: " + autocomplete2.getAttribute("placeholder"));
-		ExtentManager.log("Dropdown2 text: " + dropdown2.getAttribute("placeholder"));
-		if (autocomplete2.getAttribute("placeholder").contains("Start typing")) {
-			ExtentManager.pass("autocomplete2 field cleared");
+		if (autocomplete2.getAttribute("placeholder") != null) {
+			ExtentManager.log("Autocoplete2 text: " + autocomplete2.getAttribute("placeholder"));
+			if (autocomplete2.getAttribute("placeholder").contains("Start typing")) {
+				ExtentManager.pass("autocomplete2 field cleared");
+			} else {
+				ExtentManager.fail("autocomplete2 field DID NOT clear");
+			}
 		} else {
 			ExtentManager.fail("autocomplete2 field DID NOT clear");
 		}
-		if (dropdown2.getAttribute("placeholder").contains("Please Select")) {
-			ExtentManager.pass("dropdown2 field cleared");
+		if (dropdown2.getAttribute("placeholder") != null) {
+			ExtentManager.log("Dropdown2 text: " + dropdown2.getAttribute("placeholder"));
+			if (dropdown2.getAttribute("placeholder").contains("Please Select")) {
+				ExtentManager.pass("dropdown2 field cleared");
+			} else {
+				ExtentManager.fail("dropdown2 field DID NOT clear");
+			}
 		} else {
 			ExtentManager.fail("dropdown2 field DID NOT clear");
 		}
@@ -277,25 +293,25 @@ public class FormEditorObjects extends BasePage {
 		autocomplete1.click();
 		Thread.sleep(600);
 		if (ac1Item3.isDisplayed()) {
-			ExtentManager.fail("Autocomplete1 data DID NOT clear");
+			ExtentManager.fail("Autocomplete1 API data DID NOT clear");
 		} else {
-			ExtentManager.pass("Autocomplete1 data cleared");
+			ExtentManager.pass("Autocomplete1 API data cleared");
 		}
 		formHeader.click();
 		act.moveToElement(dropdown1).click(dropdown1).perform();
 		Thread.sleep(600);
 		if (dd1Item2.isDisplayed()) {
-			ExtentManager.fail("Dropdown1 data DID NOT clear");
+			ExtentManager.fail("Dropdown1 API data DID NOT clear");
 		} else {
-			ExtentManager.pass("Dropdown1 data cleared");
+			ExtentManager.pass("Dropdown1 API data cleared");
 		}
 		formHeader.click();
 		multiSelect1.click();
 		Thread.sleep(600);
 		if (ms1Item4.isDisplayed()) {
-			ExtentManager.fail("Multi-select1 data DID NOT clear");
+			ExtentManager.fail("Multi-select1 API data DID NOT clear");
 		} else {
-			ExtentManager.pass("Multi-select1 data cleared");
+			ExtentManager.pass("Multi-select1 API data cleared");
 		}
 	}
 
@@ -305,25 +321,25 @@ public class FormEditorObjects extends BasePage {
 		autocomplete2.click();
 		Thread.sleep(600);
 		if (ac2Item1.isDisplayed()) {
-			ExtentManager.fail("Autocomplete2 data DID NOT clear");
+			ExtentManager.fail("Autocomplete2 API data DID NOT clear");
 		} else {
-			ExtentManager.pass("Autocomplete2 data cleared");
+			ExtentManager.pass("Autocomplete2 API data cleared");
 		}
 		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
 		Thread.sleep(600);
 		if (dd2Item1.isDisplayed()) {
-			ExtentManager.fail("Dropdown2 data DID NOT clear");
+			ExtentManager.fail("Dropdown2 API data DID NOT clear");
 		} else {
-			ExtentManager.pass("Dropdown2 data cleared");
+			ExtentManager.pass("Dropdown2 API data cleared");
 		}
 		formHeader.click();
 		multiSelect2.click();
 		Thread.sleep(600);
 		if (ms2Item1.isDisplayed()) {
-			ExtentManager.fail("Multi-select2 data DID NOT clear");
+			ExtentManager.fail("Multi-select2 API data DID NOT clear");
 		} else {
-			ExtentManager.pass("Multi-select2 data cleared");
+			ExtentManager.pass("Multi-select2 API data cleared");
 		}
 	}
 
@@ -344,15 +360,15 @@ public class FormEditorObjects extends BasePage {
 	public WebElement ac2Item1;
 	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link")
 	public WebElement ms2Item1;
-	@FindBy(css = "[aria-label='Dropdown2 - ListApi ']")
+	@FindBy(css = ".dd2 .v-select__selections")
 	public WebElement dropdown2;
-	@FindBy(css = "[aria-label='Dropdown - ListApi ']")
+	@FindBy(css = ".dd1 .v-select__selections")
 	public WebElement dropdown1;
-	@FindBy(css = "[aria-label='Autocomplete - ListObjApi ']")
+	@FindBy(css = ".ac1.v-tooltip.v-tooltip--bottom input[role='combobox']")
 	public WebElement autocomplete1;
 	@FindBy(css = ".ms1 .v-select__selections")
 	public WebElement multiSelect1;
-	@FindBy(css = "[aria-label='Autocomplete2 - ListObjApi ']")
+	@FindBy(css = ".ac2.v-tooltip.v-tooltip--bottom input[role='combobox']")
 	public WebElement autocomplete2;
 	@FindBy(css = ".ddf .v-select__selections")
 	public WebElement fatherDropdown;

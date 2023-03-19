@@ -20,7 +20,6 @@
 			</class>
 		</classes>
 	</test> 
-
 	<test name="Test3" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.BuildForms">

@@ -21,7 +21,7 @@ public class PreviewForms extends Hooks {
 		forms.getPreviewForm().click();
 		Thread.sleep(3000);
 		forms.switchTab();
-		forms.devTools("https://dev19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
+		forms.devTools("https://qa19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
 		forms.previewSum(12, 12);
 		forms.previewDone();
 	}
