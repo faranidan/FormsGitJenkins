@@ -2,6 +2,24 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!-- <suite name="Suite" parallel="tests" thread-count="2"> -->
 <suite name="Suite" thread-count="1">
+	<test name="Buiding form in editor: Basic Fields not used in other tests" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildBasicFields"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Buiding form in editor: Sum API" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildSumApi"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
 	<test name="Sum API action: preview test" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
@@ -16,15 +34,6 @@
 			<class name="test.auto.ficxqa.PreviewForms">
 				<methods>
 					<include name="previewDropdown"></include>
-				</methods>
-			</class>
-		</classes>
-	</test> 
-	<test name="Buiding form in editor: Sum API" preserve-order="true">
-		<classes>
-			<class name="test.auto.ficxqa.BuildForms">
-				<methods>
-					<include name="buildSumApi"></include>
 				</methods>
 			</class>
 		</classes>

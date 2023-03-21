@@ -18,7 +18,7 @@ public class Hooks extends BasePage {
 	}
 
 	@AfterTest
-	public void end() {
+	public void end() throws InterruptedException {
 		WebDriverInstance.cleanupDriver();
 	}
 

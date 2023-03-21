@@ -57,7 +57,7 @@ public class WebDriverInstance {
 		return driver;
 	}
 	
-	public static void cleanupDriver() {
+	public static void cleanupDriver() throws InterruptedException {
 		driver.get().quit();
 		driver.remove();
 	}

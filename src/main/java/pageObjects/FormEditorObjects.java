@@ -36,12 +36,12 @@ public class FormEditorObjects extends BasePage {
 	JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 	Actions act = new Actions(getDriver());
 
-	public void addShortText(String inputNameID) throws InterruptedException, IOException {
-		if (getShortText().isDisplayed() == false) {
+	public void addField(WebElement field, String inputNameID) throws InterruptedException, IOException {
+		if (field.isDisplayed() == false) {
 			getBasicFieldsDropdown().click();
-			waitForElement(getShortText(), Duration.ofSeconds(6));
+			waitForElement(field, Duration.ofSeconds(6));
 		}
-		jse.executeScript(jsDragnDrop(), getShortText(), getDropArea1());
+		jse.executeScript(jsDragnDrop(), field, getDropArea1());
 		getGenericAttrbts().click();
 		getIntID().click();
 		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputNameID).perform();
@@ -78,13 +78,18 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 	}
 
-	public void savingForm() throws InterruptedException, IOException {
+	public void saveForm() throws InterruptedException, IOException {
+		ExtentManager.log("Starting saveForm method");
 		waitForElement(getSaveBtn(), Duration.ofSeconds(6));
 		getSaveBtn().click();
+		ExtentManager.pass("Clicked main save button");
 		Thread.sleep(600);
-		if (getSaveConfirm().isDisplayed()) {
-			getSaveConfirm().click();
+		try{
+			saveBtnTest.click();
 			Thread.sleep(600);
+			ExtentManager.pass("Clicked save button notification");
+		} catch(org.openqa.selenium.NoSuchElementException e){
+			ExtentManager.pass("no save notification");
 		}
 	}
 
@@ -127,12 +132,12 @@ public class FormEditorObjects extends BasePage {
 
 	public void switchTab() throws InterruptedException, IOException {
 		ExtentManager.log("Starting switchTab test...");
-		String MainWindow = getDriver().getWindowHandle(); // finds the id of open windows
-		Set<String> handles = getDriver().getWindowHandles(); // set is a java collection
-		Iterator<String> iterate = handles.iterator(); // goes through the set collection of handles one at a time
-		while (iterate.hasNext()) { // while loop is running while its true; as long as there is a .next value
-			String child = iterate.next(); // stores the next window id value
-			if (!MainWindow.equalsIgnoreCase(child)) { // !=not.
+		String MainWindow = getDriver().getWindowHandle(); 
+		Set<String> handles = getDriver().getWindowHandles(); 
+		Iterator<String> iterate = handles.iterator(); 
+		while (iterate.hasNext()) { 
+			String child = iterate.next(); 
+			if (!MainWindow.equalsIgnoreCase(child)) { 
 				getDriver().switchTo().window(child);
 				ExtentManager.pass("Switched succesfully to second tab. Now previewing form.");
 			}
@@ -348,14 +353,18 @@ public class FormEditorObjects extends BasePage {
 	public String input3 = "sum1";
 	public String input4 = "n2sums";
 
+	@FindBy(xpath = "//div[normalize-space()='Checkbox']") public WebElement checkboxField;
+	@FindBy(xpath = "//div[normalize-space()='Radio']") public WebElement radioField;
+	@FindBy(xpath = "//div[normalize-space()='File Upload']") public WebElement fileUploadField;
+	@FindBy(xpath = "//div[normalize-space()='Save']") public WebElement saveBtnTest;
 	@FindBy(css = "img[alt='CallVU']")
-	WebElement formEndImg;
+	public WebElement formEndImg;
 	@FindBy(css = ".ms1 .v-select__selection--comma")
-	WebElement ms1Selected;
+	public WebElement ms1Selected;
 	@FindBy(css = ".ms2 .v-select__selection--comma")
-	WebElement ms2Selected;
+	public WebElement ms2Selected;
 	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title")
-	WebElement dd2Item1;
+	public WebElement dd2Item1;
 	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title")
 	public WebElement ac2Item1;
 	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link")

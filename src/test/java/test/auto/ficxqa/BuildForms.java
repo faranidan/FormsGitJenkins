@@ -21,11 +21,11 @@ public class BuildForms extends Hooks {
 		FormEditorObjects forms = new FormEditorObjects();
 		ExtentManager.log("STARTING buildSumApi test...");
 		forms.renameFormTitleBlock("Auto SumAPI", "Page1", "Block1");
-		forms.addShortText(forms.input4);
-		forms.addShortText(forms.input3);
-		forms.addShortText(forms.input2);
-		forms.addShortText(forms.input1);
-		forms.savingForm();
+		forms.addField(forms.getShortText(), forms.input4);
+		forms.addField(forms.getShortText(), forms.input3);
+		forms.addField(forms.getShortText(), forms.input2);
+		forms.addField(forms.getShortText(), forms.input1);
+		forms.saveForm();
 
 		forms.createAction();
 		forms.createSumApi("SUM-1", "one != '' && two != ''", forms.input1, forms.input2, forms.input3);
@@ -33,7 +33,30 @@ public class BuildForms extends Hooks {
 		forms.createSumApi("SUM-2", "sum1 != ''", forms.input3, forms.input3, forms.input4);
 
 		forms.getActionCancel().click();
-		forms.savingForm();
+		forms.saveForm();
 	}
+
+	@Test
+    public void buildBasicFields() throws IOException, InterruptedException{
+        ExtentManager.log("Starting test1 for WIP...");
+        FormEditorObjects forms = new FormEditorObjects();
+        forms.renameFormTitleBlock("AutoAllBasicFields", "All basic fields", "Block1");
+        forms.addField(forms.getLongText(), "lt1");
+        forms.addField(forms.getParagraph(), "prg1");
+        forms.addField(forms.getNumberFld(), "nmb1");
+        forms.addField(forms.getPhoneNmbr(), "phn1");
+        forms.addField(forms.getEmailFld(), "email1");
+        forms.addField(forms.getPasswordFld(), "pass1");
+        forms.getAddStep().click();
+        forms.saveForm();
+
+        forms.addField(forms.getIdFld(), "id1");
+        forms.addField(forms.getDateFld(), "date1");
+        forms.addField(forms.getTimeFld(), "time1");
+        forms.addField(forms.getCurrencyFld(), "crr1");
+        forms.addField(forms.checkboxField, "chkbox`");
+        forms.addField(forms.radioField, "radio1");
+        forms.saveForm();
+    }
 
 }
