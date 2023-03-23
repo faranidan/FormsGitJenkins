@@ -15,6 +15,32 @@ public class BuildForms extends Hooks {
 	public BuildForms() throws IOException {
 		super();
 	}
+	@Test
+    public void bulidFileUpload() throws InterruptedException, IOException{
+        ExtentManager.log("Starting bulidFileUpload for WIP...");
+        FormEditorObjects forms = new FormEditorObjects();
+        forms.renameFormTitleBlock("AutoFileUpload", "Upload files test", "block1");
+		ExtentManager.pass("Renamed form & titles");
+        forms.addField(forms.fileUploadField, "fileUpload_3-multipleSizeLimit[pmg]");
+        forms.specificAttUpload("0.5", "txt", "png", "2", "Too many!");
+        ExtentManager.pass("Added field fileUpload3 with specific attributes");
+		forms.addField(forms.fileUploadField, "fileUpload_2-multipleBadType[png]");
+        forms.specificAttUpload("0.5", "txt", "json", "3", "Too many!");
+        ExtentManager.pass("Added field fileUpload2 with specific attributes");
+		forms.addField(forms.fileUploadField, "fileUpload_1-Empty");
+        ExtentManager.pass("Added field fileUpload1");
+		forms.getAddStep().click();
+        forms.addField(forms.fileUploadField, "fileUpload_6-multipleLimit[txt]");
+        forms.specificAttUpload("0.5", "txt", "", "1", "Too many!");
+        ExtentManager.pass("Added step & field fileUpload6 with specific attributes");
+		forms.addField(forms.fileUploadField, "fileUpload_5-multiEmpty");
+        forms.specificAttUpload("0.5", "txt", "", "2", "Too many!");
+        ExtentManager.pass("Added field fileUpload5 with specific attributes");
+		forms.addField(forms.fileUploadField, "fileUpload_4-any");
+        ExtentManager.pass("Added field fileUpload4 with specific attributes");
+		forms.saveForm();
+		ExtentManager.pass("Form build successful & Saved");
+    }
 
 	@Test
 	public void buildSumApi() throws InterruptedException, IOException {

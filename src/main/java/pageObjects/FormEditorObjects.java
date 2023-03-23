@@ -362,10 +362,107 @@ public class FormEditorObjects extends BasePage {
 		}
 	}
 
+	public void previewUploadFiles1() throws InterruptedException, IOException{
+		ExtentManager.log("Starting Upload1 method");
+		waitForElement(prvwFileUp1, Duration.ofSeconds(6));
+		prvwFileUp1.click();
+		Thread.sleep(600);
+		Runtime.getRuntime().exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload1.exe");
+		Thread.sleep(600);
+		ExtentManager.pass("Uploaded file1 successfully");
+		try{
+			if(errorAlert.getText().contains("File can not be empty")){
+				ExtentManager.pass("Upload1 test Passed. Empty file msg: "+errorAlert.getText());
+			} else {
+				ExtentManager.fail("Upload1 test Failed: "+errorAlert.getText());
+			}
+		} catch (Exception e){
+			ExtentManager.fail("Upload1: No error message. Empty file uploaded successfully");
+		}
+	}
+
+	public void previewUploadFiles2() throws IOException, InterruptedException{
+		ExtentManager.log("Starting Upload2 method");
+		prvwFileUp2.click();
+		Thread.sleep(600);
+		Runtime.getRuntime().exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload2file1.exe");
+		ExtentManager.pass("Uploaded file1 successfully");
+		Thread.sleep(600);
+		try{
+			if(uploadedFileName.getText().contains("Form")){
+				ExtentManager.pass("Upload2 file1 Passed. Uploaded file: "+uploadedFileName.getText());
+			} else {
+				ExtentManager.fail("Upload2 file1 Failed: "+uploadedFileName.getText());
+			}
+		} catch (Exception e){
+			ExtentManager.fail("Upload2 file1 failed. No uploaded file text");
+		}
+		prvwFileUp2.click();
+		Thread.sleep(600);
+		Runtime.getRuntime().exec("C:C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload2file2.exe");
+		Thread.sleep(600);
+		ExtentManager.pass("Uploaded file2 successfully");
+		try{
+			if(errorAlert.getText().contains("You tried to upload file(s) with forbidden extension(s)")){
+				ExtentManager.pass("Upload2 file2 Passed. Error msg: "+errorAlert.getText());
+			} else {
+				ExtentManager.fail("Upload2 file2 Failed: "+errorAlert.getText());
+			}
+		} catch (Exception e){
+			ExtentManager.fail("Upload2 file2 Failed. No error message. File uploaded successfully");
+		}
+		
+	}
+
+	public void previewUploadFiles3() throws IOException, InterruptedException{
+		ExtentManager.log("Starting Upload3 method");
+		prvwFileUp3.click();
+		Thread.sleep(600);
+		Runtime.getRuntime().exec("C:C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file1.exe");
+		ExtentManager.pass("Uploaded file1 successfully");
+		Thread.sleep(600);
+		try{
+			if(uploadedFileName2.getText().contains("Regression")){
+				ExtentManager.pass("Upload3 file1 Passed. Uploaded file: "+uploadedFileName2.getText());
+			} else {
+				ExtentManager.fail("Upload3 file1 Failed: "+uploadedFileName2.getText());
+			}
+		} catch (Exception e){
+			ExtentManager.fail("Upload3 file1 Failed. No uploaded file text");
+		}
+		prvwFileUp3.click();
+		Thread.sleep(600);
+		Runtime.getRuntime().exec("C:C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file2.exe");
+		ExtentManager.pass("Uploaded file2 successfully");
+		Thread.sleep(600);
+		try{
+			if(errorAlert2.getText().contains("The file you are trying to upload is larger")){
+				ExtentManager.pass("Upload3 file2 Passed. Error msg: "+errorAlert2.getText());
+			} else {
+				ExtentManager.pass("Upload3 file2 Failed: "+errorAlert2.getText());
+			}
+		} catch (Exception e){
+			ExtentManager.pass("Upload3 file2 failed. No error message. File uploaded successfully");
+		}
+		
+	}
+
 	public String input1 = "one";
 	public String input2 = "two";
 	public String input3 = "sum1";
 	public String input4 = "n2sums";
+
+	@FindBy(xpath = "(//li[@class='file-names-list'])[2]") public WebElement uploadedFileName2;
+	@FindBy(xpath = "//div[normalize-space()='The file you are trying to upload is larger than the 0.5 MB limit']")
+	public WebElement errorAlert2;
+	@FindBy(css = ".file-names-list") public WebElement uploadedFileName;
+	@FindBy(css = ".text-error-alert") public WebElement errorAlert;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_1')]") public WebElement prvwFileUp1;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_2')]") public WebElement prvwFileUp2;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_3')]") public WebElement prvwFileUp3;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_4')]") public WebElement prvwFileUp4;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_5')]") public WebElement prvwFileUp5;
+	@FindBy(xpath = "//div[contains(text(),'fileUpload_6')]") public WebElement prvwFileUp6;
 
 	@FindBy(xpath = "//div[contains(text(),'Specific Attributes')]") public WebElement specificAtt;
 	@FindBy(xpath = "//input[@aria-label='Limit Size (in MB)']") public WebElement limitSize;

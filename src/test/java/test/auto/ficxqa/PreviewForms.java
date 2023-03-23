@@ -17,6 +17,21 @@ public class PreviewForms extends Hooks {
 	}
 
 	@Test
+    public void previewfileUpload() throws InterruptedException, IOException{
+        ExtentManager.log("Starting previewFileUpload test...");
+        FormEditorObjects forms = new FormEditorObjects();
+        forms.openSavedForm("AutoFileUpload");
+        forms.getPreviewForm().click();
+		ExtentManager.pass("Opened form: AutoFileUpload & clicked Preview");
+		forms.switchTab();
+		ExtentManager.pass("Switched to preview tab");
+        forms.previewUploadFiles1();
+        forms.previewUploadFiles2();
+        forms.previewUploadFiles3();
+        Thread.sleep(3000);
+    }
+
+	@Test
 	public void previewSum() throws InterruptedException, IOException {
 		FormEditorObjects forms = new FormEditorObjects();
 		ExtentManager.log("STARTING previwSum test...");
