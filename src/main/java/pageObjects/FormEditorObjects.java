@@ -399,7 +399,7 @@ public class FormEditorObjects extends BasePage {
 		}
 		prvwFileUp2.click();
 		Thread.sleep(600);
-		Runtime.getRuntime().exec("C:C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload2file2.exe");
+		Runtime.getRuntime().exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload2file2.exe");
 		Thread.sleep(600);
 		ExtentManager.pass("Uploaded file2 successfully");
 		try{
@@ -418,7 +418,7 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.log("Starting Upload3 method");
 		prvwFileUp3.click();
 		Thread.sleep(600);
-		Runtime.getRuntime().exec("C:C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file1.exe");
+		Runtime.getRuntime().exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file1.exe");
 		ExtentManager.pass("Uploaded file1 successfully");
 		Thread.sleep(600);
 		try{
@@ -432,7 +432,7 @@ public class FormEditorObjects extends BasePage {
 		}
 		prvwFileUp3.click();
 		Thread.sleep(600);
-		Runtime.getRuntime().exec("C:C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file2.exe");
+		Runtime.getRuntime().exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\autoIT\\upload3file2.exe");
 		ExtentManager.pass("Uploaded file2 successfully");
 		Thread.sleep(600);
 		try{
