@@ -36,7 +36,21 @@ public class FormEditorObjects extends BasePage {
 	JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 	Actions act = new Actions(getDriver());
 
-	public void addField(WebElement field, String inputNameID) throws InterruptedException, IOException {
+	public void specificAttUpload(String size, String fileTypes1, String fileTypes2, String filesNumberLimit, String errMsg){
+		specificAtt.click();
+		limitSize.click();
+		act.sendKeys(Keys.BACK_SPACE, Keys.BACK_SPACE, Keys.BACK_SPACE, size).perform();
+		fileTypes.click();
+		act.sendKeys(fileTypes1, Keys.ENTER).perform();
+		act.sendKeys(fileTypes2, Keys.ENTER).perform();
+		acceptMultiFiles.click();
+		limitNumber.click();
+		act.sendKeys(Keys.BACK_SPACE,filesNumberLimit).perform();
+		limitErrorMsg.click();
+		act.sendKeys(errMsg).perform();
+	}
+
+	public void addField(WebElement field, String inputLabelID) throws InterruptedException, IOException {
 		if (field.isDisplayed() == false) {
 			getBasicFieldsDropdown().click();
 			waitForElement(field, Duration.ofSeconds(6));
@@ -44,9 +58,9 @@ public class FormEditorObjects extends BasePage {
 		jse.executeScript(jsDragnDrop(), field, getDropArea1());
 		getGenericAttrbts().click();
 		getIntID().click();
-		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputNameID).perform();
+		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputLabelID).perform();
 		getGenAttLabel().click();
-		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputNameID).perform();
+		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputLabelID).perform();
 	}
 
 	public void renameFormTitleBlock(String formName, String titleName, String blockName)
@@ -353,6 +367,14 @@ public class FormEditorObjects extends BasePage {
 	public String input3 = "sum1";
 	public String input4 = "n2sums";
 
+	@FindBy(xpath = "//div[contains(text(),'Specific Attributes')]") public WebElement specificAtt;
+	@FindBy(xpath = "//input[@aria-label='Limit Size (in MB)']") public WebElement limitSize;
+	@FindBy(xpath = "//label[normalize-space()='Accept Multiple Files']") public WebElement acceptMultiFiles;
+	@FindBy(xpath = "//input[@aria-label='Allowed File Types']") public WebElement fileTypes;
+	@FindBy(xpath = "//input[@aria-label='Limit Number']") public WebElement limitNumber;
+	@FindBy(xpath = "//input[@aria-label='Error Message (Exceeding Number Of Files)']") public WebElement limitErrorMsg;
+
+	@FindBy(xpath = "//div[contains(text(),'1')]") public WebElement tempUploadFile;
 	@FindBy(xpath = "//div[normalize-space()='Checkbox']") public WebElement checkboxField;
 	@FindBy(xpath = "//div[normalize-space()='Radio']") public WebElement radioField;
 	@FindBy(xpath = "//div[normalize-space()='File Upload']") public WebElement fileUploadField;

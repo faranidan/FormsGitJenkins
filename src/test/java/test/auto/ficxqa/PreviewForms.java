@@ -42,7 +42,20 @@ public class PreviewForms extends Hooks {
 		forms.dropdownSelectedFieldClear();
 		forms.dropdownDataClear1();
 		forms.dropdownDataClear2();
-
 	}
+
+	@Test
+    public void fileUploadGithub() throws InterruptedException, IOException{
+        ExtentManager.log("Starting test1 for WIP...");
+        FormEditorObjects forms = new FormEditorObjects();
+        forms.openSavedForm("File_Upload_test"); 
+        forms.getPreviewForm().click();
+		//Thread.sleep(1500);
+		forms.switchTab();
+        forms.tempUploadFile.click();
+        Thread.sleep(1200);
+        Runtime.getRuntime().exec("C:\\Users\\idan.faran\\Desktop\\resources\\Files\\upload test files\\test1.exe");
+        Thread.sleep(3000);
+    }
 
 }
