@@ -36,8 +36,9 @@ public class FormEditorObjects extends BasePage {
 	JavascriptExecutor jse = (JavascriptExecutor) getDriver();
 	Actions act = new Actions(getDriver());
 
-	public void specificAttUpload(String size, String fileTypes1, String fileTypes2, String filesNumberLimit, String errMsg){
+	public void specificAttUpload(String size, String fileTypes1, String fileTypes2, String filesNumberLimit, String errMsg) throws InterruptedException, IOException{
 		specificAtt.click();
+		waitForElement(limitSize, Duration.ofSeconds(3));
 		limitSize.click();
 		act.sendKeys(Keys.BACK_SPACE, Keys.BACK_SPACE, Keys.BACK_SPACE, size).perform();
 		fileTypes.click();
@@ -87,7 +88,7 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.pass("Listed all forms and selected the desired form to open");
 		waitForElement(getOpenBtn(), Duration.ofSeconds(3));
 		getOpenBtn().click();
-		waitForInvisibility(getOpenBtn(), Duration.ofSeconds(3));
+		waitForInvisibility(getOpenBtn(), Duration.ofSeconds(9));
 		ExtentManager.pass("Opened desired form");
 		Thread.sleep(600);
 	}
