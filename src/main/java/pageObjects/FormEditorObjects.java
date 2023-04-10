@@ -76,6 +76,7 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.log("Starting openSavedForm test...");
 		waitForElement(getFolderActions(), Duration.ofSeconds(6));
 		getFolderActions().click();
+		waitForElement(getOpenForm(), Duration.ofSeconds(6));
 		getOpenForm().click();
 		ExtentManager.pass("Got to forms folder");
 		waitForElement(getFirstForm(), Duration.ofSeconds(6));
