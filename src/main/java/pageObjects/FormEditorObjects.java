@@ -379,7 +379,7 @@ public class FormEditorObjects extends BasePage {
 				ExtentManager.fail("Upload1 test Failed: "+errorAlert.getText());
 			}
 		} catch (Exception e){
-			ExtentManager.fail("Upload1: No error message. Empty file uploaded successfully");
+			ExtentManager.fail("Upload1 test Failed: No error message. Empty file uploaded successfully");
 		}
 	}
 
@@ -406,12 +406,12 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.pass("Uploaded file2 successfully");
 		try{
 			if(errorAlert.getText().contains("You tried to upload file(s) with forbidden extension(s)")){
-				ExtentManager.pass("Upload2 file2 Passed. Error msg: "+errorAlert.getText());
+				ExtentManager.pass("Upload2 file2 test Passed. Error msg: "+errorAlert.getText());
 			} else {
-				ExtentManager.fail("Upload2 file2 Failed: "+errorAlert.getText());
+				ExtentManager.fail("Upload2 file2 test Failed: "+errorAlert.getText());
 			}
 		} catch (Exception e){
-			ExtentManager.fail("Upload2 file2 Failed. No error message. File uploaded successfully");
+			ExtentManager.fail("Upload2 file2 test Failed. No error message. File uploaded successfully");
 		}
 		
 	}
@@ -427,10 +427,10 @@ public class FormEditorObjects extends BasePage {
 			if(uploadedFileName2.getText().contains("Regression")){
 				ExtentManager.pass("Upload3 file1 Passed. Uploaded file: "+uploadedFileName2.getText());
 			} else {
-				ExtentManager.fail("Upload3 file1 Failed: "+uploadedFileName2.getText());
+				ExtentManager.fail("Upload3 file1 test Failed: "+uploadedFileName2.getText());
 			}
 		} catch (Exception e){
-			ExtentManager.fail("Upload3 file1 Failed. No uploaded file text");
+			ExtentManager.fail("Upload3 file1 test Failed. No uploaded file text");
 		}
 		prvwFileUp3.click();
 		Thread.sleep(600);
@@ -439,12 +439,12 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try{
 			if(errorAlert2.getText().contains("The file you are trying to upload is larger")){
-				ExtentManager.pass("Upload3 file2 Passed. Error msg: "+errorAlert2.getText());
+				ExtentManager.pass("Upload3 file2 test Passed. Error msg: "+errorAlert2.getText());
 			} else {
-				ExtentManager.pass("Upload3 file2 Failed: "+errorAlert2.getText());
+				ExtentManager.pass("Upload3 file2 test Failed: "+errorAlert2.getText());
 			}
 		} catch (Exception e){
-			ExtentManager.pass("Upload3 file2 failed. No error message. File uploaded successfully");
+			ExtentManager.pass("Upload3 file2 test failed. No error message. File uploaded successfully");
 		}
 		
 	}

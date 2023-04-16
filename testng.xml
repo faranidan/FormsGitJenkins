@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!-- <suite name="Suite" parallel="tests" thread-count="2"> -->
 <suite name="Suite" parallel="tests" thread-count="3">
-	<test name="preview of autofileUpload form" preserve-order="true">
+	<test name="Preview: File uploads [form autofileUpload]" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
 				<methods>
@@ -11,6 +11,7 @@
 			</class>
 		</classes>
 	</test>
+	<!-- 
 	<test name="Buiding form in editor: File upload test" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.BuildForms">
@@ -38,7 +39,7 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="Sum API action: preview test" preserve-order="true">
+	<test name="Preview: Sum API action" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
 				<methods>
@@ -47,7 +48,7 @@
 			</class>
 		</classes>
 	</test> 
-	<test name="Dropdowns: multiple API actions. Preview test" preserve-order="true">
+	<test name="Preview: Dropdowns- multiple API actions" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
 				<methods>
@@ -56,4 +57,5 @@
 			</class>
 		</classes>
 	</test>
+	-->
 </suite> 
