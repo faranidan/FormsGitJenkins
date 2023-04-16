@@ -51,7 +51,7 @@ public class BuildForms extends Hooks {
 		forms.addField(forms.getShortText(), forms.input3);
 		forms.addField(forms.getShortText(), forms.input2);
 		forms.addField(forms.getShortText(), forms.input1);
-		forms.saveForm();
+		//forms.saveForm();
 
 		forms.createAction();
 		forms.createSumApi("SUM-1", "one != '' && two != ''", forms.input1, forms.input2, forms.input3);
@@ -74,7 +74,7 @@ public class BuildForms extends Hooks {
         forms.addField(forms.getEmailFld(), "email1");
         forms.addField(forms.getPasswordFld(), "pass1");
         forms.getAddStep().click();
-        forms.saveForm();
+        //forms.saveForm();
 
         forms.addField(forms.getIdFld(), "id1");
         forms.addField(forms.getDateFld(), "date1");

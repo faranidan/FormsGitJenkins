@@ -11,35 +11,7 @@
 			</class>
 		</classes>
 	</test>
-	<!-- 
-	<test name="Buiding form in editor: File upload test" preserve-order="true">
-		<classes>
-			<class name="test.auto.ficxqa.BuildForms">
-				<methods>
-					<include name="bulidFileUpload"></include>
-				</methods>
-			</class>
-		</classes>
-	</test> 
-	<test name="Buiding form in editor: Basic Fields not used in other tests" preserve-order="true">
-		<classes>
-			<class name="test.auto.ficxqa.BuildForms">
-				<methods>
-					<include name="buildBasicFields"></include>
-				</methods>
-			</class>
-		</classes>
-	</test> 
-	<test name="Buiding form in editor: Sum API" preserve-order="true">
-		<classes>
-			<class name="test.auto.ficxqa.BuildForms">
-				<methods>
-					<include name="buildSumApi"></include>
-				</methods>
-			</class>
-		</classes>
-	</test> 
-	<test name="Preview: Sum API action" preserve-order="true">
+	<test name="Preview: Sum API actions" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
 				<methods>
@@ -57,5 +29,31 @@
 			</class>
 		</classes>
 	</test>
-	-->
+	<test name="Buid in editor: File upload test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="bulidFileUpload"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Buid in editor: Basic Fields test form [not used in other tests]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildBasicFields"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
+	<test name="Buid in editor: Sum API actions test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="buildSumApi"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
 </suite> 
