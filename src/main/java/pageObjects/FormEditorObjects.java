@@ -62,6 +62,7 @@ public class FormEditorObjects extends BasePage {
 		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputLabelID).perform();
 		getGenAttLabel().click();
 		act.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(inputLabelID).perform();
+		ExtentManager.pass("Field added succesfully: "+inputLabelID);
 	}
 
 	public void renameFormTitleBlock(String formName, String titleName, String blockName)
@@ -89,8 +90,8 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.pass("Listed all forms and selected the desired form to open");
 		waitForElement(getOpenBtn(), Duration.ofSeconds(3));
 		getOpenBtn().click();
-		waitForInvisibility(getOpenBtn(), Duration.ofSeconds(9));
-		ExtentManager.pass("Opened desired form");
+		waitForInvisibility(getOpenBtn(), Duration.ofSeconds(6));
+		ExtentManager.pass("Opened desired form: "+name);
 		Thread.sleep(600);
 	}
 
@@ -104,7 +105,7 @@ public class FormEditorObjects extends BasePage {
 			saveBtnTest.click();
 			Thread.sleep(600);
 			ExtentManager.pass("Clicked save button notification");
-		} catch(org.openqa.selenium.NoSuchElementException e){
+		} catch(Exception e){
 			ExtentManager.pass("no save notification");
 		}
 	}
@@ -131,6 +132,7 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(300);
 		act.scrollToElement(getActionSaveBtn()).click(getActionSaveBtn()).perform();
 		Thread.sleep(900);
+		ExtentManager.pass("Created actions succesfully: "+apiName);
 	}
 
 	public void newSumActionISA() throws InterruptedException, IOException {
@@ -144,6 +146,7 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(300);
 		act.scrollToElement(getSumAPI()).click(getSumAPI()).perform();
 		Thread.sleep(300);
+		ExtentManager.pass("Added a new SUM action inside the actions menu");
 	}
 
 	public void switchTab() throws InterruptedException, IOException {
@@ -446,14 +449,113 @@ public class FormEditorObjects extends BasePage {
 		} catch (Exception e){
 			ExtentManager.pass("Upload3 file2 test failed. No error message. File uploaded successfully");
 		}
-		
 	}
 
-	public String input1 = "one";
-	public String input2 = "two";
-	public String input3 = "sum1";
-	public String input4 = "n2sums";
+	public void addNewRule(String enterRuleName, String enterRuleCode) throws InterruptedException, IOException{
+		ExtentManager.log("Starting editRules method");
+		if(!ruleName.isDisplayed()){
+			editRulesBtn.click();
+		} else {
+			act.scrollToElement(createNewRule).click(createNewRule).perform();
+		}
+		act.click(ruleName).sendKeys(enterRuleName).perform();
+		Thread.sleep(600);
+		if (ruleNmNotUnqError.isDisplayed()){
+			ExtentManager.log("Rule name already exists");
+			for (int i = 0; i < savedRulesList.size(); i++) {
+				String name = savedRulesList.get(i).getText();
+				System.out.println("rules names: "+name);
+				if (name.equals(enterRuleName)) {
+					savedRulesList.get(i).click();
+					Thread.sleep(600);
+					deleteRule.click();
+					Thread.sleep(600);
+					act.moveToElement(deleteRuleOK).click().perform();
+				}
+			}
+			act.click(ruleName).sendKeys(enterRuleName).perform();
+		}
 
+		act.click(rulesCode).sendKeys(enterRuleCode).perform();
+		act.scrollToElement(ruleSelectField).click(ruleSelectField).perform();
+		ExtentManager.pass("Added a new rule Name & Code");
+	}
+
+	public void ruleOutcome(WebElement field, WebElement fieldStatus) throws InterruptedException, IOException{
+		ExtentManager.log("Starting ruleOutcome method");
+		waitForElement(field, Duration.ofSeconds(3));
+		act.scrollToElement(field).click(field).perform();
+		ruleSelectFieldStatus.click();
+		waitForElement(fieldStatus, Duration.ofSeconds(3));
+		fieldStatus.click();
+		ExtentManager.pass("Selected a field & outcome for rule");
+		act.scrollToElement(ruleSaveBtn).click(ruleSaveBtn).perform();
+		ExtentManager.pass("Saved rule");
+		}
+	
+	public void addOutcome(WebElement fieldStatus) throws InterruptedException, IOException{
+		ExtentManager.log("Starting addOutcome method");
+		plusRuleBtn.click();
+		ExtentManager.pass("Added rule inside, using Plus button");
+		act.moveToElement(nextFieldStatus).click().perform();
+		fieldStatus.click();
+		ExtentManager.pass("Selected status to next field in line [auto selected next field]");
+		act.scrollToElement(ruleUpdateSave).click(ruleUpdateSave).perform();
+		Thread.sleep(600);
+		ExtentManager.pass("Saved-Update rule");		
+	}
+
+	public void addRuleByBlock(WebElement block, WebElement blockStatus) throws InterruptedException, IOException{
+		ExtentManager.log("Starting addRuleByBlock method");
+		waitForElement(ruleByFieldDD,Duration.ofSeconds(9));
+		ruleByFieldDD.click();
+		byBlockDD.click();
+		act.moveToElement(selectBlockDD).click().perform();
+		block.click();
+		act.moveToElement(selectBlockStatus).click().perform();
+		blockStatus.click();
+		act.scrollToElement(ruleSaveBtn).click(ruleSaveBtn).perform();
+		ExtentManager.pass("Rule by block added & saved");
+	}
+
+	
+	@FindBy(css = "img[alt='delete.png']") public WebElement deleteRule;
+	@FindBy(xpath = "(//button[@type='button'])[2]") public WebElement deleteRuleOK;
+	@FindBy(xpath = "(//div[@role='listitem'][@class='rule-item'])") public List<WebElement> savedRulesList;
+	@FindBy(xpath = "//div[contains(text(),'Not unique')]") public WebElement ruleNmNotUnqError;
+	@FindBy(xpath = "//input[@aria-label='Select Block Status']") public WebElement selectBlockStatus;
+	@FindBy(xpath = "//div[contains(text(),'Block2')]") public WebElement Block2;
+	@FindBy(xpath = "//input[@aria-label='Select Block']") public WebElement selectBlockDD;
+	@FindBy(xpath = "//div[contains(text(),'By Block')]") public WebElement byBlockDD;
+	@FindBy(css = ".v-select__selection.v-select__selection--comma") public WebElement ruleByFieldDD;
+	@FindBy(xpath = "//div[normalize-space()='Update']") public WebElement ruleUpdateSave;
+	@FindBy(css = "div[class='v-input v-text-field v-text-field--single-line v-text-field--solo v-text-field--enclosed v-select theme--light'] div[class='v-select__slot']") 
+	public WebElement nextFieldStatus;
+	@FindBy(xpath = "//button[@class='rounded-button v-btn theme--light'][normalize-space()='add']") 
+	public WebElement plusRuleBtn;
+	@FindBy(xpath = "//div[@class='v-btn__content'][normalize-space()='Save']") public WebElement ruleSaveBtn;
+	@FindBy(xpath = "(//input[@aria-label='Select Block Status']") public WebElement ruleSelectBlockStatus;
+	@FindBy(xpath = "//div[contains(text(),'Title')]") public WebElement ruleBlock2;
+	@FindBy(xpath = "(//input[@aria-label='Select Block']") public WebElement ruleSelectBlock;
+	@FindBy(xpath = "//div[contains(text(),'By Block')]") public WebElement ruleByBlock;
+	@FindBy(xpath = "(//div[@class='v-select__slot'])[1]") public WebElement ruleByField;
+	@FindBy(xpath = "//div[contains(text(),'Disabled')]") public WebElement fieldStatusDisabled;
+	@FindBy(xpath = "//div[contains(text(),'Enabled')]") public WebElement fieldStatusEnabled;
+	@FindBy(xpath = "//div[contains(text(),'Required')]") public WebElement fieldStatusRequired;
+	@FindBy(xpath = "//div[contains(text(),'Visible')]") public WebElement fieldStatusVisible;
+	@FindBy(xpath = "//div[contains(text(),'Hidden')]") public WebElement fieldStatusHidden;
+	@FindBy(xpath = "//div[contains(text(),'chkbx')]") public WebElement chkbxFieldSlct;
+	@FindBy(xpath = "//div[contains(text(),'radio')]") public WebElement radioFieldSlct;
+	@FindBy(xpath = "//div[contains(text(),'phn')]") public WebElement phnFieldSlct;
+	@FindBy(xpath = "//div[contains(text(),'nmb')]") public WebElement nmbFieldSlct;
+	@FindBy(xpath = "//div[contains(text(),'prg')]") public WebElement prgFieldSlct;
+	@FindBy(xpath = "(//div[@class='v-select__selections'])[2]") public WebElement ruleSelectFieldStatus;
+	@FindBy(xpath = "//input[@aria-label='Select Field']") public WebElement ruleSelectField;
+	@FindBy(css = ".CodeMirror-scroll") public WebElement rulesCode;
+	@FindBy(xpath = "//div[normalize-space()='Create New Rule +']") public WebElement createNewRule;
+	@FindBy(xpath = "(//input[@type='text'])[2]") public WebElement ruleName;
+	@FindBy(xpath = "//div[normalize-space()='Edit Rules']") public WebElement editRulesBtn;
+	
 	@FindBy(xpath = "(//li[@class='file-names-list'])[2]") public WebElement uploadedFileName2;
 	@FindBy(xpath = "//div[normalize-space()='The file you are trying to upload is larger than the 0.5 MB limit']")
 	public WebElement errorAlert2;
@@ -478,12 +580,9 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='Radio']") public WebElement radioField;
 	@FindBy(xpath = "//div[normalize-space()='File Upload']") public WebElement fileUploadField;
 	@FindBy(xpath = "//div[normalize-space()='Save']") public WebElement saveBtnTest;
-	@FindBy(css = "img[alt='CallVU']")
-	public WebElement formEndImg;
-	@FindBy(css = ".ms1 .v-select__selection--comma")
-	public WebElement ms1Selected;
-	@FindBy(css = ".ms2 .v-select__selection--comma")
-	public WebElement ms2Selected;
+	@FindBy(css = "img[alt='CallVU']") public WebElement formEndImg;
+	@FindBy(css = ".ms1 .v-select__selection--comma") public WebElement ms1Selected;
+	@FindBy(css = ".ms2 .v-select__selection--comma") public WebElement ms2Selected;
 	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title")
 	public WebElement dd2Item1;
 	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title")
@@ -530,6 +629,11 @@ public class FormEditorObjects extends BasePage {
 	public WebElement selectField2;
 	@FindBy(css = ".theme--light:nth-of-type(4) [role='listitem']:nth-of-type(2) [class='flex pr-4 xs4']:nth-of-type(2) .v-input__slot")
 	public WebElement selectField1;
+	
+	public String input1 = "one";
+	public String input2 = "two";
+	public String input3 = "sum1";
+	public String input4 = "n2sums";
 
 	By basicFieldsDropdown = By.cssSelector(
 			".v-expansion-panel__container:nth-of-type(2) .v-expansion-panel__header .justify-center .flex:nth-of-type(2)");

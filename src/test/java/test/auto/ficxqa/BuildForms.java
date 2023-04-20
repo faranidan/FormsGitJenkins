@@ -17,7 +17,7 @@ public class BuildForms extends Hooks {
 	}
 	@Test
     public void bulidFileUpload() throws InterruptedException, IOException{
-        ExtentManager.log("Starting bulidFileUpload for WIP...");
+        ExtentManager.log("Starting bulidFileUpload test...");
         FormEditorObjects forms = new FormEditorObjects();
         forms.renameFormTitleBlock("AutoFileUpload", "Upload files test", "block1");
 		ExtentManager.pass("Renamed form & titles");
@@ -45,7 +45,7 @@ public class BuildForms extends Hooks {
 	@Test
 	public void buildSumApi() throws InterruptedException, IOException {
 		FormEditorObjects forms = new FormEditorObjects();
-		ExtentManager.log("STARTING buildSumApi test...");
+		ExtentManager.log("Staring buildSumApi test...");
 		forms.renameFormTitleBlock("Auto SumAPI", "Page1", "Block1");
 		forms.addField(forms.getShortText(), forms.input4);
 		forms.addField(forms.getShortText(), forms.input3);
@@ -64,25 +64,52 @@ public class BuildForms extends Hooks {
 
 	@Test
     public void buildBasicFields() throws IOException, InterruptedException{
-        ExtentManager.log("Starting test1 for WIP...");
+        ExtentManager.log("Starting buildBasicFields test...");
         FormEditorObjects forms = new FormEditorObjects();
-        forms.renameFormTitleBlock("AutoAllBasicFields", "All basic fields", "Block1");
-        forms.addField(forms.getLongText(), "lt1");
-        forms.addField(forms.getParagraph(), "prg1");
-        forms.addField(forms.getNumberFld(), "nmb1");
-        forms.addField(forms.getPhoneNmbr(), "phn1");
-        forms.addField(forms.getEmailFld(), "email1");
-        forms.addField(forms.getPasswordFld(), "pass1");
+        forms.renameFormTitleBlock("AutoRulesBasicFields", "Auto Rules w. BasicFields", "Block1");
+        forms.addField(forms.getParagraph(), "prg");
+        forms.addField(forms.getNumberFld(), "nmb");
+        forms.addField(forms.getPhoneNmbr(), "phn");
+        forms.addField(forms.radioField, "radio");
+        forms.addField(forms.checkboxField, "chkbx");
+        forms.addField(forms.getEmailFld(), "email");
+        forms.addField(forms.getPasswordFld(), "pass");
         forms.getAddStep().click();
-        //forms.saveForm();
-
+        forms.renameFormTitleBlock("AutoRulesBasicFields", "Auto Rules w. BasicFields", "Block2");
         forms.addField(forms.getIdFld(), "id1");
-        forms.addField(forms.getDateFld(), "date1");
-        forms.addField(forms.getTimeFld(), "time1");
-        forms.addField(forms.getCurrencyFld(), "crr1");
-        forms.addField(forms.checkboxField, "chkbox`");
-        forms.addField(forms.radioField, "radio1");
+        forms.addField(forms.getDateFld(), "date");
+        forms.addField(forms.getTimeFld(), "time");
+        forms.addField(forms.getCurrencyFld(), "crr");
+        forms.addField(forms.getLongText(), "lt1");
         forms.saveForm();
     }
 
+    @Test
+    public void buildRules() throws IOException, InterruptedException{
+        ExtentManager.log("Starting buildRules test...");
+        FormEditorObjects forms = new FormEditorObjects();
+        forms.openSavedForm("AutoRulesBasicFields");
+        
+        forms.addNewRule("1", "pass");
+        forms.ruleOutcome(forms.chkbxFieldSlct, forms.fieldStatusEnabled);
+        forms.addOutcome(forms.fieldStatusDisabled);
+        forms.addOutcome(forms.fieldStatusVisible);
+        forms.addOutcome(forms.fieldStatusRequired);
+        forms.addOutcome(forms.fieldStatusHidden);
+
+        forms.addNewRule("2", "email");
+        forms.ruleOutcome(forms.chkbxFieldSlct, forms.fieldStatusDisabled);
+        forms.addOutcome(forms.fieldStatusEnabled);
+        forms.addOutcome(forms.fieldStatusHidden);
+        forms.addOutcome(forms.fieldStatusRequired);
+        forms.addOutcome(forms.fieldStatusVisible);
+         
+        forms.addNewRule("off", "nmb");
+        forms.addRuleByBlock(forms.Block2, forms.fieldStatusHidden);
+        forms.addNewRule("on", "nmb");
+        forms.addRuleByBlock(forms.Block2, forms.fieldStatusVisible);
+
+        forms.getActionCancel().click();
+		forms.saveForm();
+    }
 }
