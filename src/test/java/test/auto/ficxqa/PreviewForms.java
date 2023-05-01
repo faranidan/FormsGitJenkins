@@ -37,7 +37,6 @@ public class PreviewForms extends Hooks {
 		ExtentManager.log("STARTING previwSum test...");
 		forms.openSavedForm("Automation.v3");
 		forms.getPreviewForm().click();
-		Thread.sleep(3000);
 		forms.switchTab();
 		forms.devTools("https://qa19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
 		forms.previewSum(12, 12);
@@ -50,7 +49,6 @@ public class PreviewForms extends Hooks {
 		ExtentManager.log("STARTING previwDropdown test...");
 		forms.openSavedForm("idanActionsDD[4autoTest]");
 		forms.getPreviewForm().click();
-		Thread.sleep(3000);
 		forms.switchTab();
 		forms.dropdownFill1();
 		forms.dropdownFill2();
@@ -65,11 +63,11 @@ public class PreviewForms extends Hooks {
 		ExtentManager.log("STARTING previewRules test...");
 		forms.openSavedForm("AutoRulesBasicFields");
 		forms.getPreviewForm().click();
-		Thread.sleep(3000);
 		forms.switchTab();
 		forms.prvwRulesStep1();
 		forms.prvwRulesStep2();
 		forms.prvwRulesStep3();
+		forms.prvwRulesStep4();
 		Thread.sleep(3000);
 	}
 

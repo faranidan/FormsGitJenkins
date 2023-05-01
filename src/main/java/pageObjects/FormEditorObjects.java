@@ -153,6 +153,7 @@ public class FormEditorObjects extends BasePage {
 
 	public void switchTab() throws InterruptedException, IOException {
 		ExtentManager.log("Starting switchTab test...");
+		Thread.sleep(3000);
 		String MainWindow = getDriver().getWindowHandle(); 
 		Set<String> handles = getDriver().getWindowHandles(); 
 		Iterator<String> iterate = handles.iterator(); 
@@ -475,94 +476,96 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void prvwRulesStep1() throws InterruptedException, IOException{
-		ExtentManager.log("Starting prvwRulesStep1 method");
-		getPrvwNext().click();
-		Thread.sleep(600);
-		try{
-			lt1Prvw.click();
-			System.out.println("Rule Failed: clicked lt1 field [not Hidden]");
-		}catch(Exception e){
-			System.out.println("Rule Passed: could not click lt1 [Hidden]");
-		}
-		backBtnPrvw.click();
+		ExtentManager.log("Starting prvwRulesStep1 method...");
 		waitForElement(chkbxPrvw, Duration.ofSeconds(3));
-		try{
-			chkbxPrvw.click();
-			System.out.println("Rule Failed: clicked chkbx [not disabled]");
-		}catch(Exception e){
-			System.out.println("Rule Passed: could not click chkbx [disabled]");
-		}
-		try{
-			radio2Prvw.click();
-			System.out.println("Rule Failed: clicked radio2Prvw [not disabled]");
-		}catch(Exception e){
-			System.out.println("Passed: could not click radio2Prvw [disabled]");
-		}
+		testRulesDisabled(chkbxPrvw);
+		testRulesDisabled(radio2Prvw);
+		passPrvw.sendKeys("1");
+		testRulesEnabled(chkbxPrvw);
+		phnPrvw.sendKeys("1");
+		Thread.sleep(300);
+		getPrvwNext().click();
+		Thread.sleep(300);
+		testErrorMsg("Required");
 	}
 
 	public void prvwRulesStep2() throws InterruptedException, IOException{
-		ExtentManager.log("Starting prvwRulesStep1 method");
-		passPrvw.sendKeys("1");
-		try{
-			chkbxPrvw.click();
-			System.out.println("Rule Passed: clicked chkbx [enabled]");
-		}catch(Exception e){
-			System.out.println("Rule Failed: could not click chkbx [not enabled]");
-		}
-		phnPrvw.sendKeys("2");
-		Thread.sleep(300);
-		getPrvwNext().click();
-		Thread.sleep(300);
-		if(errorMsgPrvw.isDisplayed()){
-			System.out.println("Rule Passed: [Required] error msg appeared, did not pass page");
-		} else {
-			System.out.println("Rule Failed: [Required] error msg did not appear");
-		}
+		ExtentManager.log("Starting prvwRulesStep2 method...");
 		nmbPrvw.sendKeys("3");
 		getPrvwNext().click();
-	}
-
-	public void prvwRulesStep3() throws InterruptedException, IOException{
-		ExtentManager.log("Starting prvwRulesStep1 method");
-		lt1Prvw.sendKeys("This is an eample of a long text. This is an eample of a long text. This is an eample of a long text.");
+		lt1Prvw.sendKeys("This is an example of a long text. This is an example of a long text");
 		crrPrvw.sendKeys("100");
 		timePrvw.sendKeys("12");
 		block2HdrPrvw.click();
-		Thread.sleep(300);
-		if(errorMsgPrvw.isDisplayed()){
-			System.out.println("Passed: [Time field] error msg appeared: "+errorMsgPrvw.getText());
-		} else {
-			System.out.println("Failed: [Time field] error msg did not appear");
-		}
+		testErrorMsg("Time field");
 		timePrvwAfterChange.sendKeys(":12");
-		datePrvw.sendKeys("01");
-		block2HdrPrvw.click();
-		Thread.sleep(300);
-		if(errorMsgPrvw.isDisplayed()){
-			System.out.println("Passed: [Date field] error msg appeared: "+errorMsgPrvw.getText());
-		} else {
-			System.out.println("Failed: [Date field] error msg did not appear");
-		}
-		datePrvw.sendKeys("/02/2023");
-		Thread.sleep(300);
-		try{
-			if (errorMsgPrvw.isDisplayed()){
-				System.out.println("Failed: [Date field] error msg did not dissappeared");
-			}
-		} catch(Exception e) {
-			System.out.println("Passed: [Date field] error msg disappeared");
-		}
-		id1Prvw.sendKeys("123456789");
-		block2HdrPrvw.click();
-		Thread.sleep(300);
-		if(errorMsgPrvw.isDisplayed()){
-			System.out.println("Passed: [ID field] error msg appeared: "+errorMsgPrvw.getText());
-		} else {
-			System.out.println("Failed: [ID field] error msg did not appear");
-		}
-		backBtnPrvw.click();
 	}
 
+	public void prvwRulesStep3() throws InterruptedException, IOException{
+		ExtentManager.log("Starting prvwRulesStep3 method...");
+		datePrvw.sendKeys("01");
+		block2HdrPrvw.click();
+		testErrorMsg("Date field");
+		datePrvw.sendKeys("/02/2023");
+		testRulesDisabled(errorMsgPrvw);
+		id1Prvw.sendKeys("123456789");
+		block2HdrPrvw.click();
+		testErrorMsg("ID field");
+		backBtnPrvw.click();
+		waitForElement(phnPostPrvw, Duration.ofSeconds(3));
+	}
+
+	public void prvwRulesStep4() throws InterruptedException, IOException{
+		ExtentManager.log("Starting prvwRulesStep4 method...");
+		phnPostPrvw.sendKeys(Keys.BACK_SPACE);
+		getPrvwNext().click();
+		testRulesDisabled(lt1Prvw);
+		backBtnPrvw.click();
+		waitForElement(phnPrvw, Duration.ofSeconds(3));
+		phnPrvw.sendKeys("1");
+		block1HdrPrvw.click();
+		Thread.sleep(4200);
+		getPrvwNext().click();
+		try{
+			if (lt1Prvw.getAttribute("aria-label").length()==4){
+			System.out.println("Passed: Hidden rule cleared Fields");
+			}
+		} catch(Exception e) {
+			System.out.println("Failed: Hidden rule DID NOT clear Fields");
+		}
+	}
+	
+
+	public void testRulesDisabled(WebElement field) throws InterruptedException{
+		Thread.sleep(600);
+		try{
+			field.click();
+			System.out.println(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
+		}catch(Exception e){
+			System.out.println("Rule Passed: could not click [field disabled/hidden]");
+		}
+	}
+
+	public void testRulesEnabled(WebElement field) throws InterruptedException{
+		Thread.sleep(600);
+		try{
+			field.click();
+			System.out.println(field.getText()+" - Rule Passed: clicked [field not disabled/hidden]");
+		}catch(Exception e){
+			System.out.println("Rule Failed: could not click [field disabled/hidden]");
+		}
+	}
+
+	public void testErrorMsg(String type) throws InterruptedException{
+		Thread.sleep(600);
+		if(errorMsgPrvw.isDisplayed()){
+			System.out.println(type+"field- Rule Passed: Error msg appeared");
+		} else {
+			System.out.println(type+"field- Rule Failed: Error msg did not appear");
+		}
+	}
+
+	@FindBy(css = "h2[aria-label='Block1']") public WebElement block1HdrPrvw;
 	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='No data available'])") public WebElement noDataAvl;
 	@FindBy(css = "input[aria-label='time 12']") public WebElement timePrvwAfterChange;
 	@FindBy(css = "h2[aria-label='Block2']") public WebElement block2HdrPrvw;
@@ -579,6 +582,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='Radio 1']") public WebElement radio1Prvw;
 	@FindBy(xpath = "(//div[@class='v-input--selection-controls__ripple'])[3]") public WebElement chkbxPrvw;
 	@FindBy(css = "input[aria-label='phn ']") public WebElement phnPrvw;
+	@FindBy(css = "input[aria-label='phn 1']") public WebElement phnPostPrvw;
 	@FindBy(css = "input[aria-label='nmb ']") public WebElement nmbPrvw;
 	@FindBy(css = "#emailinput_lgp6178w") public WebElement emailPrvw;
 	@FindBy(css = "input[aria-label='pass ']") public WebElement passPrvw;
