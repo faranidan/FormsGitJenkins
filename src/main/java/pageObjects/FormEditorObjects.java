@@ -10,6 +10,7 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.devtools.DevTools;
@@ -85,6 +86,7 @@ public class FormEditorObjects extends BasePage {
 			String formName = formList.get(i).getText();
 			if (formName.contains(name)) {
 				act.scrollToElement(formList.get(i)).click(formList.get(i)).perform();
+				i = formList.size();
 			}
 		}
 		ExtentManager.pass("Listed all forms and selected the desired form to open");
@@ -242,11 +244,9 @@ public class FormEditorObjects extends BasePage {
 		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
 		Thread.sleep(3600);
-		// waitForElement(dd2Item1,Duration.ofSeconds(12));
 		dd2Item1.click();
 		autocomplete2.click();
 		Thread.sleep(600);
-		// waitForElement(ac2Item1,Duration.ofSeconds(6));
 		ac2Item1.click();
 		multiSelect2.click();
 		ms2Item1.click();
@@ -254,116 +254,72 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void dropdownSelectedFieldClear() throws InterruptedException {
-		ExtentManager.log("Starting dropdownSelectedFieldClear test...");
+		ExtentManager.log("Starting dropdownSelectedFieldClear method...");
 		fddClear.click();
 		ExtentManager.pass("Cleared fatherDropdown");
-		Thread.sleep(4500);
-		if (autocomplete1.getAttribute("placeholder") != null) {
-			ExtentManager.log("Autocoplete1 text: " + autocomplete1.getAttribute("placeholder"));
-			if (autocomplete1.getAttribute("placeholder").contains("Start typing")) {
-				ExtentManager.pass("Autocomplete1 field cleared");
-			} else {
-				ExtentManager.fail("Autocomplete1 field DID NOT clear");
-			}
-		} else {
-			ExtentManager.fail("Autocomplete1 field DID NOT clear");
-		}
-		if (dropdown1.getAttribute("placeholder") != null) {
-			ExtentManager.log("Dropdown1 text: " + dropdown1.getAttribute("placeholder"));
-			if (dropdown1.getAttribute("placeholder").contains("Please Select")) {
-				ExtentManager.pass("Dropdown1 field cleared");
-			} else {
-				ExtentManager.fail("Dropdown1 field DID NOT clear");
-			}
-		} else {
-			ExtentManager.fail("Dropdown1 field DID NOT clear");
-		}
-
-		if (!ms1Selected.isDisplayed()) {
-			ExtentManager.pass("Multi-Select1 field cleared");
-		} else {
-			ExtentManager.fail("Multi-Select1 field DID NOT clear");
-		}
-
-		if (autocomplete2.getAttribute("placeholder") != null) {
-			ExtentManager.log("Autocoplete2 text: " + autocomplete2.getAttribute("placeholder"));
-			if (autocomplete2.getAttribute("placeholder").contains("Start typing")) {
-				ExtentManager.pass("autocomplete2 field cleared");
-			} else {
-				ExtentManager.fail("autocomplete2 field DID NOT clear");
-			}
-		} else {
-			ExtentManager.fail("autocomplete2 field DID NOT clear");
-		}
-		if (dropdown2.getAttribute("placeholder") != null) {
-			ExtentManager.log("Dropdown2 text: " + dropdown2.getAttribute("placeholder"));
-			if (dropdown2.getAttribute("placeholder").contains("Please Select")) {
-				ExtentManager.pass("dropdown2 field cleared");
-			} else {
-				ExtentManager.fail("dropdown2 field DID NOT clear");
-			}
-		} else {
-			ExtentManager.fail("dropdown2 field DID NOT clear");
-		}
-		if (!ms2Selected.isDisplayed()) {
-			ExtentManager.pass("Multi-Select2 field cleared");
-		} else {
-			ExtentManager.fail("Multi-Select2 field DID NOT clear");
-		}
+		Thread.sleep(1800);
+		testEmptyDDownInput(dropdown1, "Please Select");
+		testEmptyDDownInput(autocomplete1, "Start typing...");
+		testEmptyDDownInput(ms1Selected, "Please Select");
+		testEmptyDDownInput(dropdown2, "Please Select");
+		testEmptyDDownInput(autocomplete2, "Start typing...");
+		testEmptyDDownInput(ms2Selected, "Please Select");
 	}
 
 	public void dropdownDataClear1() throws InterruptedException {
-		ExtentManager.log("Starting dropdownDataClear1 test...");
+		ExtentManager.log("Starting dropdownDataClear1 method...");
 		autocomplete1.click();
-		Thread.sleep(600);
-		if (ac1Item3.isDisplayed()) {
-			ExtentManager.fail("Autocomplete1 API data DID NOT clear");
-		} else {
-			ExtentManager.pass("Autocomplete1 API data cleared");
-		}
+		Thread.sleep(300);
+		testDropdownClearing(ac1Item3);
 		formHeader.click();
 		act.moveToElement(dropdown1).click(dropdown1).perform();
-		Thread.sleep(600);
-		if (dd1Item2.isDisplayed()) {
-			ExtentManager.fail("Dropdown1 API data DID NOT clear");
-		} else {
-			ExtentManager.pass("Dropdown1 API data cleared");
-		}
+		Thread.sleep(300);
+		testDropdownClearing(dd1Item2);
 		formHeader.click();
 		multiSelect1.click();
-		Thread.sleep(600);
-		if (ms1Item4.isDisplayed()) {
-			ExtentManager.fail("Multi-select1 API data DID NOT clear");
-		} else {
-			ExtentManager.pass("Multi-select1 API data cleared");
-		}
+		Thread.sleep(300);
+		testDropdownClearing(ms1Item4);
 	}
 
 	public void dropdownDataClear2() throws InterruptedException {
 		ExtentManager.log("Starting dropdownDataClear2 test...");
 		formHeader.click();
-		autocomplete2.click();
-		Thread.sleep(600);
-		if (ac2Item1.isDisplayed()) {
-			ExtentManager.fail("Autocomplete2 API data DID NOT clear");
-		} else {
-			ExtentManager.pass("Autocomplete2 API data cleared");
-		}
-		formHeader.click();
 		act.moveToElement(dropdown2).click(dropdown2).perform();
-		Thread.sleep(600);
-		if (dd2Item1.isDisplayed()) {
-			ExtentManager.fail("Dropdown2 API data DID NOT clear");
-		} else {
-			ExtentManager.pass("Dropdown2 API data cleared");
-		}
+		Thread.sleep(300);
+		testDropdownClearing(dd2Item1);
+		formHeader.click();
+		autocomplete2.click();
+		Thread.sleep(300);
+		testDropdownClearing(ac2Item1);
 		formHeader.click();
 		multiSelect2.click();
-		Thread.sleep(600);
-		if (ms2Item1.isDisplayed()) {
-			ExtentManager.fail("Multi-select2 API data DID NOT clear");
+		Thread.sleep(300);
+		testDropdownClearing(ms2Item1);
+	}
+
+	public void testDropdownClearing(WebElement item){
+		if(noDataAvl.isDisplayed()){
+			ExtentManager.pass("Data tested has cleared successfully");
+		} else if ((!noDataAvl.isDisplayed())){ 
+			try{
+				if (item.getText().length()>0){
+					ExtentManager.fail(item.getText()+"- field data DID NOT clear");
+				} else {
+					ExtentManager.pass("Data tested has cleared successfully");
+				}
+			} catch (NoSuchElementException e){
+				ExtentManager.pass("Data tested has cleared successfully");
+			}
 		} else {
-			ExtentManager.pass("Multi-select2 API data cleared");
+			ExtentManager.fail(item.getText()+"- field data DID NOT clear");
+		}
+	}
+
+	public void testEmptyDDownInput(WebElement item, String emptyMsg){
+		if (item.getAttribute("placeholder").contains(emptyMsg)) {
+			ExtentManager.pass(item.getAttribute("aria-label")+"- field cleared");
+		} else {
+			ExtentManager.fail(item.getAttribute("aria-label")+"- field DID NOT clear.");
 		}
 	}
 
@@ -518,6 +474,114 @@ public class FormEditorObjects extends BasePage {
 		ExtentManager.pass("Rule by block added & saved");
 	}
 
+	public void prvwRulesStep1() throws InterruptedException, IOException{
+		ExtentManager.log("Starting prvwRulesStep1 method");
+		getPrvwNext().click();
+		Thread.sleep(600);
+		try{
+			lt1Prvw.click();
+			System.out.println("Rule Failed: clicked lt1 field [not Hidden]");
+		}catch(Exception e){
+			System.out.println("Rule Passed: could not click lt1 [Hidden]");
+		}
+		backBtnPrvw.click();
+		waitForElement(chkbxPrvw, Duration.ofSeconds(3));
+		try{
+			chkbxPrvw.click();
+			System.out.println("Rule Failed: clicked chkbx [not disabled]");
+		}catch(Exception e){
+			System.out.println("Rule Passed: could not click chkbx [disabled]");
+		}
+		try{
+			radio2Prvw.click();
+			System.out.println("Rule Failed: clicked radio2Prvw [not disabled]");
+		}catch(Exception e){
+			System.out.println("Passed: could not click radio2Prvw [disabled]");
+		}
+	}
+
+	public void prvwRulesStep2() throws InterruptedException, IOException{
+		ExtentManager.log("Starting prvwRulesStep1 method");
+		passPrvw.sendKeys("1");
+		try{
+			chkbxPrvw.click();
+			System.out.println("Rule Passed: clicked chkbx [enabled]");
+		}catch(Exception e){
+			System.out.println("Rule Failed: could not click chkbx [not enabled]");
+		}
+		phnPrvw.sendKeys("2");
+		Thread.sleep(300);
+		getPrvwNext().click();
+		Thread.sleep(300);
+		if(errorMsgPrvw.isDisplayed()){
+			System.out.println("Rule Passed: [Required] error msg appeared, did not pass page");
+		} else {
+			System.out.println("Rule Failed: [Required] error msg did not appear");
+		}
+		nmbPrvw.sendKeys("3");
+		getPrvwNext().click();
+	}
+
+	public void prvwRulesStep3() throws InterruptedException, IOException{
+		ExtentManager.log("Starting prvwRulesStep1 method");
+		lt1Prvw.sendKeys("This is an eample of a long text. This is an eample of a long text. This is an eample of a long text.");
+		crrPrvw.sendKeys("100");
+		timePrvw.sendKeys("12");
+		block2HdrPrvw.click();
+		Thread.sleep(300);
+		if(errorMsgPrvw.isDisplayed()){
+			System.out.println("Passed: [Time field] error msg appeared: "+errorMsgPrvw.getText());
+		} else {
+			System.out.println("Failed: [Time field] error msg did not appear");
+		}
+		timePrvwAfterChange.sendKeys(":12");
+		datePrvw.sendKeys("01");
+		block2HdrPrvw.click();
+		Thread.sleep(300);
+		if(errorMsgPrvw.isDisplayed()){
+			System.out.println("Passed: [Date field] error msg appeared: "+errorMsgPrvw.getText());
+		} else {
+			System.out.println("Failed: [Date field] error msg did not appear");
+		}
+		datePrvw.sendKeys("/02/2023");
+		Thread.sleep(300);
+		try{
+			if (errorMsgPrvw.isDisplayed()){
+				System.out.println("Failed: [Date field] error msg did not dissappeared");
+			}
+		} catch(Exception e) {
+			System.out.println("Passed: [Date field] error msg disappeared");
+		}
+		id1Prvw.sendKeys("123456789");
+		block2HdrPrvw.click();
+		Thread.sleep(300);
+		if(errorMsgPrvw.isDisplayed()){
+			System.out.println("Passed: [ID field] error msg appeared: "+errorMsgPrvw.getText());
+		} else {
+			System.out.println("Failed: [ID field] error msg did not appear");
+		}
+		backBtnPrvw.click();
+	}
+
+	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='No data available'])") public WebElement noDataAvl;
+	@FindBy(css = "input[aria-label='time 12']") public WebElement timePrvwAfterChange;
+	@FindBy(css = "h2[aria-label='Block2']") public WebElement block2HdrPrvw;
+	@FindBy(xpath = "//span[normalize-space()='Back']") public WebElement backBtnPrvw;
+	@FindBy(css = "input[aria-label='id1 ']") public WebElement id1Prvw;
+	@FindBy(css = "#dateinput_lgp6194a") public WebElement datePrvw;
+	@FindBy(css = "input[aria-label='time ']") public WebElement timePrvw;
+	@FindBy(css = "input[aria-label='crr ']") public WebElement crrPrvw;
+	@FindBy(css = "input[aria-label='lt1 ']") public WebElement lt1Prvw;
+	@FindBy(xpath = "//p[normalize-space()='Paragraph Text']") public WebElement prgPrvw;
+	@FindBy(css = ".v-messages__message") public WebElement errorMsgPrvw;
+
+	@FindBy(xpath = "//div[normalize-space()='Radio 2']") public WebElement radio2Prvw;
+	@FindBy(xpath = "//div[normalize-space()='Radio 1']") public WebElement radio1Prvw;
+	@FindBy(xpath = "(//div[@class='v-input--selection-controls__ripple'])[3]") public WebElement chkbxPrvw;
+	@FindBy(css = "input[aria-label='phn ']") public WebElement phnPrvw;
+	@FindBy(css = "input[aria-label='nmb ']") public WebElement nmbPrvw;
+	@FindBy(css = "#emailinput_lgp6178w") public WebElement emailPrvw;
+	@FindBy(css = "input[aria-label='pass ']") public WebElement passPrvw;
 	
 	@FindBy(css = "img[alt='delete.png']") public WebElement deleteRule;
 	@FindBy(xpath = "(//button[@type='button'])[2]") public WebElement deleteRuleOK;
@@ -581,28 +645,21 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='File Upload']") public WebElement fileUploadField;
 	@FindBy(xpath = "//div[normalize-space()='Save']") public WebElement saveBtnTest;
 	@FindBy(css = "img[alt='CallVU']") public WebElement formEndImg;
-	@FindBy(css = ".ms1 .v-select__selection--comma") public WebElement ms1Selected;
-	@FindBy(css = ".ms2 .v-select__selection--comma") public WebElement ms2Selected;
+	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select - BranchByCityApi')]") public WebElement ms1Selected;
+	@FindBy(xpath = "//input[contains(@aria-label,'Multi-Select2')]") public WebElement ms2Selected;
 	@FindBy(css = "#app div:nth-of-type(6) [role='listitem']:nth-of-type(1) .v-list__tile__title")
 	public WebElement dd2Item1;
 	@FindBy(css = "#app div:nth-of-type(4) [role='listitem']:nth-of-type(1) .v-list__tile__title")
 	public WebElement ac2Item1;
 	@FindBy(css = "#app div:nth-of-type(2) [role='listitem']:nth-of-type(1) .v-list__tile--link")
 	public WebElement ms2Item1;
-	@FindBy(css = ".dd2 .v-select__selections")
-	public WebElement dropdown2;
-	@FindBy(css = ".dd1 .v-select__selections")
-	public WebElement dropdown1;
-	@FindBy(css = ".ac1.v-tooltip.v-tooltip--bottom input[role='combobox']")
-	public WebElement autocomplete1;
-	@FindBy(css = ".ms1 .v-select__selections")
-	public WebElement multiSelect1;
-	@FindBy(css = ".ac2.v-tooltip.v-tooltip--bottom input[role='combobox']")
-	public WebElement autocomplete2;
-	@FindBy(css = ".ddf .v-select__selections")
-	public WebElement fatherDropdown;
-	@FindBy(css = ".ms2 .v-select__selections")
-	public WebElement multiSelect2;
+	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown2')]") public WebElement dropdown2;
+	@FindBy(xpath = "//input[contains(@aria-label,'Dropdown - ListApi')]") public WebElement dropdown1;
+	@FindBy(xpath = "//input[@aria-label='Autocomplete - ListObjApi ']") public WebElement autocomplete1;
+	@FindBy(css = ".ms1 .v-select__selections") public WebElement multiSelect1;
+	@FindBy(xpath = "//input[@aria-label='Autocomplete2 - ListObjApi ']") public WebElement autocomplete2;
+	@FindBy(css = ".ddf .v-select__selections") public WebElement fatherDropdown;
+	@FindBy(css = ".ms2 .v-select__selections") public WebElement multiSelect2;
 	@FindBy(css = "div:nth-of-type(14) > .theme--light.v-card.v-select-list > div[role='list'] > div:nth-of-type(1)")
 	public WebElement fddItem1;
 	@FindBy(css = "#app div:nth-of-type(12) [role='listitem']:nth-of-type(2) .v-list__tile__title")

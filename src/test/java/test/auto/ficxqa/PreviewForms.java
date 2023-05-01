@@ -48,7 +48,7 @@ public class PreviewForms extends Hooks {
 	public void previewDropdown() throws IOException, InterruptedException {
 		FormEditorObjects forms = new FormEditorObjects();
 		ExtentManager.log("STARTING previwDropdown test...");
-		forms.openSavedForm("idanActionsDD");
+		forms.openSavedForm("idanActionsDD[4autoTest]");
 		forms.getPreviewForm().click();
 		Thread.sleep(3000);
 		forms.switchTab();
@@ -57,6 +57,20 @@ public class PreviewForms extends Hooks {
 		forms.dropdownSelectedFieldClear();
 		forms.dropdownDataClear1();
 		forms.dropdownDataClear2();
+	}
+
+	@Test
+	public void previewRules() throws IOException, InterruptedException {
+		FormEditorObjects forms = new FormEditorObjects();
+		ExtentManager.log("STARTING previewRules test...");
+		forms.openSavedForm("AutoRulesBasicFields");
+		forms.getPreviewForm().click();
+		Thread.sleep(3000);
+		forms.switchTab();
+		forms.prvwRulesStep1();
+		forms.prvwRulesStep2();
+		forms.prvwRulesStep3();
+		Thread.sleep(3000);
 	}
 
 }
