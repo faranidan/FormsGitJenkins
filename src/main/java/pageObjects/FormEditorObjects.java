@@ -528,10 +528,10 @@ public class FormEditorObjects extends BasePage {
 		getPrvwNext().click();
 		try{
 			if (lt1Prvw.getAttribute("aria-label").length()==4){
-			System.out.println("Passed: Hidden rule cleared Fields");
+			ExtentManager.pass("Passed: Hidden rule cleared Fields");
 			}
 		} catch(Exception e) {
-			System.out.println("Failed: Hidden rule DID NOT clear Fields");
+			ExtentManager.fail("Failed: Hidden rule DID NOT clear Fields");
 		}
 	}
 	
@@ -540,9 +540,9 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try{
 			field.click();
-			System.out.println(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
+			ExtentManager.fail(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
 		}catch(Exception e){
-			System.out.println("Rule Passed: could not click [field disabled/hidden]");
+			ExtentManager.pass("Rule Passed: could not click [field disabled/hidden]");
 		}
 	}
 
@@ -550,18 +550,18 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try{
 			field.click();
-			System.out.println(field.getText()+" - Rule Passed: clicked [field not disabled/hidden]");
+			ExtentManager.pass(field.getText()+" - Rule Passed: clicked [field not disabled/hidden]");
 		}catch(Exception e){
-			System.out.println("Rule Failed: could not click [field disabled/hidden]");
+			ExtentManager.fail("Rule Failed: could not click [field disabled/hidden]");
 		}
 	}
 
 	public void testErrorMsg(String type) throws InterruptedException{
 		Thread.sleep(600);
 		if(errorMsgPrvw.isDisplayed()){
-			System.out.println(type+"field- Rule Passed: Error msg appeared");
+			ExtentManager.pass(type+"field- Rule Passed: Error msg appeared");
 		} else {
-			System.out.println(type+"field- Rule Failed: Error msg did not appear");
+			ExtentManager.fail(type+"field- Rule Failed: Error msg did not appear");
 		}
 	}
 
