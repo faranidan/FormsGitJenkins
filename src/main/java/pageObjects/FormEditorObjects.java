@@ -417,7 +417,8 @@ public class FormEditorObjects extends BasePage {
 		}
 		act.click(ruleName).sendKeys(enterRuleName).perform();
 		Thread.sleep(600);
-		if (ruleNmNotUnqError.isDisplayed()){
+		try{
+			ruleNmNotUnqError.isDisplayed();
 			ExtentManager.log("Rule name already exists");
 			for (int i = 0; i < savedRulesList.size(); i++) {
 				String name = savedRulesList.get(i).getText();
@@ -431,6 +432,8 @@ public class FormEditorObjects extends BasePage {
 				}
 			}
 			act.click(ruleName).sendKeys(enterRuleName).perform();
+		} catch (Exception e){
+			ExtentManager.pass("new rule is being made");
 		}
 
 		act.click(rulesCode).sendKeys(enterRuleCode).perform();
@@ -492,6 +495,8 @@ public class FormEditorObjects extends BasePage {
 	public void prvwRulesStep2() throws InterruptedException, IOException{
 		ExtentManager.log("Starting prvwRulesStep2 method...");
 		nmbPrvw.sendKeys("3");
+		block1HdrPrvw.click();
+		Thread.sleep(600);
 		getPrvwNext().click();
 		lt1Prvw.sendKeys("This is an example of a long text. This is an example of a long text");
 		crrPrvw.sendKeys("100");
@@ -512,26 +517,22 @@ public class FormEditorObjects extends BasePage {
 		block2HdrPrvw.click();
 		testErrorMsg("ID field");
 		backBtnPrvw.click();
-		waitForElement(phnPostPrvw, Duration.ofSeconds(3));
+		waitForElement(passAfterPrvw, Duration.ofSeconds(3));
 	}
 
 	public void prvwRulesStep4() throws InterruptedException, IOException{
 		ExtentManager.log("Starting prvwRulesStep4 method...");
-		phnPostPrvw.sendKeys(Keys.BACK_SPACE);
-		getPrvwNext().click();
-		testRulesDisabled(lt1Prvw);
-		backBtnPrvw.click();
-		waitForElement(phnPrvw, Duration.ofSeconds(3));
-		phnPrvw.sendKeys("1");
+		passAfterPrvw.sendKeys(Keys.BACK_SPACE);
 		block1HdrPrvw.click();
-		Thread.sleep(4200);
-		getPrvwNext().click();
-		try{
-			if (lt1Prvw.getAttribute("aria-label").length()==4){
-			ExtentManager.pass("Passed: Hidden rule cleared Fields");
-			}
-		} catch(Exception e) {
-			ExtentManager.fail("Failed: Hidden rule DID NOT clear Fields");
+		Thread.sleep(600);
+		testRulesDisabled(phnPrvw);
+		passPrvw.sendKeys("123");
+		block1HdrPrvw.click();
+		Thread.sleep(600);
+		if (phnPrvw.getAttribute("aria-label").equals("phn ")){
+			ExtentManager.pass("Passed: Hidden rule cleared phn Field");
+		} else {
+			ExtentManager.fail("Failed: Hidden rule DID NOT clear phn Field");
 		}
 	}
 	
@@ -566,12 +567,14 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	@FindBy(css = "h2[aria-label='Block1']") public WebElement block1HdrPrvw;
-	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='No data available'])") public WebElement noDataAvl;
+	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='No data available'])") 
+	public WebElement noDataAvl;
 	@FindBy(css = "input[aria-label='time 12']") public WebElement timePrvwAfterChange;
 	@FindBy(css = "h2[aria-label='Block2']") public WebElement block2HdrPrvw;
 	@FindBy(xpath = "//span[normalize-space()='Back']") public WebElement backBtnPrvw;
 	@FindBy(css = "input[aria-label='id1 ']") public WebElement id1Prvw;
-	@FindBy(css = "#dateinput_lgp6194a") public WebElement datePrvw;
+	@FindBy(xpath = "//input[@aria-label='date Enter month, slash, day, slash, year format  ']") 
+	public WebElement datePrvw;
 	@FindBy(css = "input[aria-label='time ']") public WebElement timePrvw;
 	@FindBy(css = "input[aria-label='crr ']") public WebElement crrPrvw;
 	@FindBy(css = "input[aria-label='lt1 ']") public WebElement lt1Prvw;
@@ -582,10 +585,11 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "//div[normalize-space()='Radio 1']") public WebElement radio1Prvw;
 	@FindBy(xpath = "(//div[@class='v-input--selection-controls__ripple'])[3]") public WebElement chkbxPrvw;
 	@FindBy(css = "input[aria-label='phn ']") public WebElement phnPrvw;
-	@FindBy(css = "input[aria-label='phn 1']") public WebElement phnPostPrvw;
+	@FindBy(css = "input[aria-label='nmb 1']") public WebElement nmbPostPrvw;
 	@FindBy(css = "input[aria-label='nmb ']") public WebElement nmbPrvw;
 	@FindBy(css = "#emailinput_lgp6178w") public WebElement emailPrvw;
 	@FindBy(css = "input[aria-label='pass ']") public WebElement passPrvw;
+	@FindBy(css = "input[aria-label='pass 1']") public WebElement passAfterPrvw;
 	
 	@FindBy(css = "img[alt='delete.png']") public WebElement deleteRule;
 	@FindBy(xpath = "(//button[@type='button'])[2]") public WebElement deleteRuleOK;
