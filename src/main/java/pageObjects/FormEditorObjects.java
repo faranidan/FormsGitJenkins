@@ -40,7 +40,7 @@ public class FormEditorObjects extends BasePage {
 	public void specificAttUpload(String size, String fileTypes1, String fileTypes2, String filesNumberLimit, String errMsg) throws InterruptedException, IOException{
 		specificAtt.click();
 		waitForElement(limitSize, Duration.ofSeconds(3));
-		limitSize.click();
+		act.moveToElement(limitSize).click(limitSize).perform();
 		act.sendKeys(Keys.BACK_SPACE, Keys.BACK_SPACE, Keys.BACK_SPACE, size).perform();
 		fileTypes.click();
 		act.sendKeys(fileTypes1, Keys.ENTER).perform();
