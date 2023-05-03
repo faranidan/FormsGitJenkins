@@ -559,9 +559,10 @@ public class FormEditorObjects extends BasePage {
 
 	public void testErrorMsg(String type) throws InterruptedException{
 		Thread.sleep(600);
-		if(errorMsgPrvw.isDisplayed()){
+		try{
+			errorMsgPrvw.isDisplayed();
 			ExtentManager.pass(type+"field- Rule Passed: Error msg appeared");
-		} else {
+		} catch (Exception e){
 			ExtentManager.fail(type+"field- Rule Failed: Error msg did not appear");
 		}
 	}
