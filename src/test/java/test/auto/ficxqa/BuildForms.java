@@ -104,9 +104,9 @@ public class BuildForms extends Hooks {
         forms.addOutcome(forms.fieldStatusRequired);
         forms.addOutcome(forms.fieldStatusVisible);
          
-        forms.addNewRule("off", "nmb");
+        forms.addNewRule("off", "!phn");
         forms.addRuleByBlock(forms.Block2, forms.fieldStatusHidden);
-        forms.addNewRule("on", "nmb");
+        forms.addNewRule("on", "phn");
         forms.addRuleByBlock(forms.Block2, forms.fieldStatusVisible);
 
         forms.getActionCancel().click();
