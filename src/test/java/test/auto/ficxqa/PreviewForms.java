@@ -20,6 +20,7 @@ public class PreviewForms extends Hooks {
     public void previewfileUpload() throws InterruptedException, IOException{
         ExtentManager.log("Starting previewFileUpload test...");
         FormEditorObjects forms = new FormEditorObjects();
+		System.out.println("Test previewfileUpload started");
         forms.openSavedForm("AutoFileUpload");
         forms.getPreviewForm().click();
 		ExtentManager.pass("Opened form: AutoFileUpload & clicked Preview");
@@ -29,24 +30,28 @@ public class PreviewForms extends Hooks {
         forms.previewUploadFiles2();
         forms.previewUploadFiles3();
         Thread.sleep(3000);
+		System.out.println("Test previewfileUpload ended.");
     }
 
 	@Test
 	public void previewSum() throws InterruptedException, IOException {
 		FormEditorObjects forms = new FormEditorObjects();
 		ExtentManager.log("STARTING previwSum test...");
+		System.out.println("Test previewSum started");
 		forms.openSavedForm("Automation.v3");
 		forms.getPreviewForm().click();
 		forms.switchTab();
 		forms.devTools("https://qa19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
 		forms.previewSum(12, 12);
 		forms.previewDone();
+		System.out.println("Test previewSum ended.");
 	}
 
 	@Test
 	public void previewDropdown() throws IOException, InterruptedException {
 		FormEditorObjects forms = new FormEditorObjects();
 		ExtentManager.log("STARTING previwDropdown test...");
+		System.out.println("Test previewDropdown started");
 		forms.openSavedForm("idanActionsDD[4autoTest]");
 		forms.getPreviewForm().click();
 		forms.switchTab();
@@ -55,12 +60,14 @@ public class PreviewForms extends Hooks {
 		forms.dropdownSelectedFieldClear();
 		forms.dropdownDataClear1();
 		forms.dropdownDataClear2();
+		System.out.println("Test previewDropdown ended.");
 	}
 
 	@Test
 	public void previewRules() throws IOException, InterruptedException {
 		FormEditorObjects forms = new FormEditorObjects();
 		ExtentManager.log("STARTING previewRules test...");
+		System.out.println("Test previewRules Started");
 		forms.openSavedForm("AutoRulesBasicFields");
 		forms.getPreviewForm().click();
 		forms.switchTab();
@@ -68,7 +75,16 @@ public class PreviewForms extends Hooks {
 		forms.prvwRulesStep2();
 		forms.prvwRulesStep3();
 		forms.prvwRulesStep4();
-		Thread.sleep(3000);
+		System.out.println("Test previewRules ended.");
+	}
+
+	@Test
+	public void previewSteps() throws IOException, InterruptedException {
+		FormEditorObjects forms = new FormEditorObjects();
+		forms.openSavedForm("AutoRulesBasicFields");
+		forms.getPreviewForm().click();
+		forms.switchTab();
+
 	}
 
 }

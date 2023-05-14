@@ -567,6 +567,38 @@ public class FormEditorObjects extends BasePage {
 		}
 	}
 
+	public void editStep(WebElement step, String nextStepName, String backStepName, boolean add) {
+		step.click();
+		nextStep.click();
+		nextStepText.sendKeys(nextStepName);
+		if (step != step1){
+			backStep.click();
+			backStepText.sendKeys(backStepName);
+		}
+		if (add==true) {
+			addStep.click();
+		}
+	}
+
+	//preview steps
+	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl next-step white--text']")
+	public WebElement nextStepBtnPrvw;
+	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl prev-step white--text']")
+	public WebElement backStepBtnPrvw;
+
+	//build steps
+	@FindBy (css = "span[placeholder='Step Title']") public WebElement step1;
+	@FindBy (css = "input[aria-label='Step Name']") public WebElement stepName;
+	@FindBy (xpath = "//div[contains(text(),'Next Step')]") public WebElement nextStep;
+	@FindBy (xpath = "//div[contains(text(),'Back Step')]") public WebElement backStep;
+	@FindBy (css = "input[aria-label='Text']") public WebElement nextStepText;
+	@FindBy (xpath = "(//input[@aria-label='Text'])[2]") public WebElement backStepText;
+	@FindBy (xpath = "(//label[normalize-space()='Hide Step Button'])[1]") public WebElement hideNextStepBtn;
+	@FindBy (xpath = "(//label[normalize-space()='Hide Step Button'])[2]") public WebElement hideBackStepBtn;
+	@FindBy (css = ".blue--text .material-icons") public WebElement addStep;
+	@FindBy (xpath = "//i[normalize-space()='check']") public WebElement currentStep;
+
+	//preview rules
 	@FindBy(css = "h2[aria-label='Block1']") public WebElement block1HdrPrvw;
 	@FindBy(xpath = "(//div[@class='v-list__tile__title'][normalize-space()='No data available'])") 
 	public WebElement noDataAvl;
@@ -581,7 +613,6 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(css = "input[aria-label='lt1 ']") public WebElement lt1Prvw;
 	@FindBy(xpath = "//p[normalize-space()='Paragraph Text']") public WebElement prgPrvw;
 	@FindBy(css = ".v-messages__message") public WebElement errorMsgPrvw;
-
 	@FindBy(xpath = "//div[normalize-space()='Radio 2']") public WebElement radio2Prvw;
 	@FindBy(xpath = "//div[normalize-space()='Radio 1']") public WebElement radio1Prvw;
 	@FindBy(xpath = "(//div[@class='v-input--selection-controls__ripple'])[3]") public WebElement chkbxPrvw;
@@ -592,6 +623,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(css = "input[aria-label='pass ']") public WebElement passPrvw;
 	@FindBy(css = "input[aria-label='pass 1']") public WebElement passAfterPrvw;
 	
+	//create rules
 	@FindBy(css = "img[alt='delete.png']") public WebElement deleteRule;
 	@FindBy(xpath = "(//button[@type='button'])[2]") public WebElement deleteRuleOK;
 	@FindBy(xpath = "(//div[@role='listitem'][@class='rule-item'])") public List<WebElement> savedRulesList;
@@ -629,6 +661,7 @@ public class FormEditorObjects extends BasePage {
 	@FindBy(xpath = "(//input[@type='text'])[2]") public WebElement ruleName;
 	@FindBy(xpath = "//div[normalize-space()='Edit Rules']") public WebElement editRulesBtn;
 	
+	//file upload preview
 	@FindBy(xpath = "(//li[@class='file-names-list'])[2]") public WebElement uploadedFileName2;
 	@FindBy(xpath = "//div[normalize-space()='The file you are trying to upload is larger than the 0.5 MB limit']")
 	public WebElement errorAlert2;
@@ -742,7 +775,6 @@ public class FormEditorObjects extends BasePage {
 	By readOnlyAtt = By.cssSelector("div:nth-of-type(11) > .v-input__control > .v-input__slot > .theme--light.v-label");
 	By requiredAtt = By.cssSelector("div:nth-of-type(12) > .v-input__control > .v-input__slot > .theme--light.v-label");
 	By hiddenAtt = By.cssSelector("div:nth-of-type(13) > .v-input__control > .v-input__slot > .theme--light.v-label");
-	By addStep = By.cssSelector(".blue--text .material-icons");
 	By genAttLabel = By.cssSelector(
 			".element-list.v-card__text > div:nth-of-type(2) > .v-input__control > .v-input__slot > .v-text-field__slot > input[type='text']");
 	By intID = By.cssSelector("[aria-label='Integration ID']");
@@ -910,10 +942,6 @@ public class FormEditorObjects extends BasePage {
 
 	public WebElement getIntID() throws InterruptedException, IOException {
 		return getDriver().findElement(intID);
-	}
-
-	public WebElement getAddStep() throws InterruptedException, IOException {
-		return getDriver().findElement(addStep);
 	}
 
 	public WebElement getHiddenAtt() throws InterruptedException, IOException {
