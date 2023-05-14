@@ -610,7 +610,7 @@ public class FormEditorObjects extends BasePage {
 	public WebElement datePrvw;
 	@FindBy(css = "input[aria-label='time ']") public WebElement timePrvw;
 	@FindBy(css = "input[aria-label='crr ']") public WebElement crrPrvw;
-	@FindBy(css = "input[aria-label='lt1 ']") public WebElement lt1Prvw;
+	@FindBy(xpath = "//textarea[@aria-label='lt1 ']") public WebElement lt1Prvw;
 	@FindBy(xpath = "//p[normalize-space()='Paragraph Text']") public WebElement prgPrvw;
 	@FindBy(css = ".v-messages__message") public WebElement errorMsgPrvw;
 	@FindBy(xpath = "//div[normalize-space()='Radio 2']") public WebElement radio2Prvw;
