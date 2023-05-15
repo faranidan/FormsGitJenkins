@@ -42,7 +42,7 @@ public class BuildForms extends Hooks {
         ExtentManager.pass("Added field fileUpload4 with specific attributes");
 		forms.saveForm();
 		ExtentManager.pass("Created form successfully & Saved");
-        System.out.println("Test bulidFileUpload ended.");
+        System.out.println("Test bulidFileUpload ended successfully.");
     }
 
 	@Test
@@ -63,7 +63,7 @@ public class BuildForms extends Hooks {
 
 		forms.getActionCancel().click();
 		forms.saveForm();
-        System.out.println("Test buildSumApi ended.");
+        System.out.println("Test buildSumApi ended successfully.");
 
 	}
 
@@ -88,7 +88,7 @@ public class BuildForms extends Hooks {
         forms.addField(forms.getCurrencyFld(), "crr");
         forms.addField(forms.getLongText(), "lt1");
         forms.saveForm();
-        System.out.println("Test buildBasicFields ended.");
+        System.out.println("Test buildBasicFields ended successfully.");
     }
 
     @Test
@@ -119,7 +119,7 @@ public class BuildForms extends Hooks {
 
         forms.getActionCancel().click();
 		forms.saveForm();
-        System.out.println("Test buildRules ended.");
+        System.out.println("Test buildRules ended successfully.");
     }
 
     @Test
@@ -133,6 +133,6 @@ public class BuildForms extends Hooks {
         forms.editStep(forms.currentStep, "4", "2", true);
         forms.editStep(forms.currentStep, "Finish", "3", false);
         forms.saveForm();
-        System.out.println("Test createSteps ended.");
+        System.out.println("Test createSteps ended successfully.");
     }
 }

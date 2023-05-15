@@ -568,19 +568,43 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void editStep(WebElement step, String nextStepName, String backStepName, boolean add) {
+		ExtentManager.log("Starting editStep method");
 		step.click();
 		nextStep.click();
 		nextStepText.sendKeys(nextStepName);
+		ExtentManager.pass("Added next step name");
 		if (step != step1){
 			backStep.click();
 			backStepText.sendKeys(backStepName);
+			ExtentManager.pass("Added back step name");
 		}
 		if (add==true) {
 			addStep.click();
+			ExtentManager.pass("Added a new step");
 		}
 	}
 
+	public void testStepName(WebElement step, String stepName){
+		ExtentManager.log("Starting testStepName method");
+		if (step.getText().contains(stepName)){
+            ExtentManager.pass("Validation success! next btn is: "+step.getText());
+        } else {
+            ExtentManager.fail("failed next validation :"+step.getText());
+        }
+	}
+
+	public void testLastStepName(String stepName){
+		ExtentManager.log("Starting testLastStepName method");
+		if (doneStepBtnPrvw.getText().contains(stepName)){
+            ExtentManager.pass("Validation success! next btn is: "+doneStepBtnPrvw.getText());
+        } else {
+            ExtentManager.fail("failed next validation :"+doneStepBtnPrvw.getText());
+        }
+	}
+
 	//preview steps
+	@FindBy (xpath = "//button[@class='v-btn v-btn--block theme--light blue done-btn white--text']//div[@class='v-btn__content']")
+	public WebElement doneStepBtnPrvw;
 	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl next-step white--text']")
 	public WebElement nextStepBtnPrvw;
 	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl prev-step white--text']")

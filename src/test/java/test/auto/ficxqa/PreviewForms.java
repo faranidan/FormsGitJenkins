@@ -30,7 +30,7 @@ public class PreviewForms extends Hooks {
         forms.previewUploadFiles2();
         forms.previewUploadFiles3();
         Thread.sleep(3000);
-		System.out.println("Test previewfileUpload ended.");
+		System.out.println("Test previewfileUpload ended successfully.");
     }
 
 	@Test
@@ -44,7 +44,7 @@ public class PreviewForms extends Hooks {
 		forms.devTools("https://qa19.callvu.net/LAN/APIGateway/CallAPI?Name=Sum");
 		forms.previewSum(12, 12);
 		forms.previewDone();
-		System.out.println("Test previewSum ended.");
+		System.out.println("Test previewSum ended successfully.");
 	}
 
 	@Test
@@ -60,7 +60,7 @@ public class PreviewForms extends Hooks {
 		forms.dropdownSelectedFieldClear();
 		forms.dropdownDataClear1();
 		forms.dropdownDataClear2();
-		System.out.println("Test previewDropdown ended.");
+		System.out.println("Test previewDropdown ended successfully.");
 	}
 
 	@Test
@@ -75,16 +75,35 @@ public class PreviewForms extends Hooks {
 		forms.prvwRulesStep2();
 		forms.prvwRulesStep3();
 		forms.prvwRulesStep4();
-		System.out.println("Test previewRules ended.");
+		System.out.println("Test previewRules ended successfully.");
 	}
 
 	@Test
 	public void previewSteps() throws IOException, InterruptedException {
 		FormEditorObjects forms = new FormEditorObjects();
-		forms.openSavedForm("AutoRulesBasicFields");
+		ExtentManager.log("STARTING previewSteps test...");
+		System.out.println("Test previewSteps Started");
+		forms.openSavedForm("AutoSteps");
 		forms.getPreviewForm().click();
 		forms.switchTab();
-
+        forms.testStepName(forms.nextStepBtnPrvw, "2");
+        forms.nextStepBtnPrvw.click();
+        Thread.sleep(600);
+        forms.testStepName(forms.backStepBtnPrvw, "1");
+        forms.testStepName(forms.nextStepBtnPrvw, "3");
+        forms.nextStepBtnPrvw.click();
+        Thread.sleep(600);
+        forms.testStepName(forms.backStepBtnPrvw, "2");
+        forms.testStepName(forms.nextStepBtnPrvw, "4");
+        forms.nextStepBtnPrvw.click();
+        Thread.sleep(600);
+        forms.testStepName(forms.backStepBtnPrvw, "3");
+        forms.testLastStepName("Finish");
+        forms.backStepBtnPrvw.click();
+        Thread.sleep(600);
+        forms.testStepName(forms.backStepBtnPrvw, "2");
+        forms.testStepName(forms.nextStepBtnPrvw, "4");
+		System.out.println("Test previewRules ended successfully.");
 	}
 
 }

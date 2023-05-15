@@ -2,6 +2,15 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!-- <suite name="Suite" parallel="tests" thread-count="2"> -->
 <suite name="Suite" parallel="tests" thread-count="3">
+	<test name="Digital-Form preview: Steps [form name: AutoSteps]" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.PreviewForms">
+				<methods>
+					<include name="previewSteps"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
 	<test name="Digital-Form preview: Rules [form name: AutoRulesBasicFields]" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
@@ -38,6 +47,16 @@
 			</class>
 		</classes>
 	</test>
+	<!-- creating in editor tests -->
+	<test name="Create in editor: Steps test form" preserve-order="true">
+		<classes>
+			<class name="test.auto.ficxqa.BuildForms">
+				<methods>
+					<include name="createSteps"></include>
+				</methods>
+			</class>
+		</classes>
+	</test> 
 	<test name="Create in editor: Rules test form" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.BuildForms">
