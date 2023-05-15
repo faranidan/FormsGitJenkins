@@ -494,6 +494,7 @@ public class FormEditorObjects extends BasePage {
 
 	public void prvwRulesStep2() throws InterruptedException, IOException{
 		ExtentManager.log("Starting prvwRulesStep2 method...");
+		Thread.sleep(600);
 		nmbPrvw.sendKeys("3");
 		block1HdrPrvw.click();
 		Thread.sleep(600);
