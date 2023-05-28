@@ -2,20 +2,20 @@
 <testng-results ignored="5" total="6" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-05-28T19:12:43 IDT" name="Suite" finished-at="2023-05-28T19:14:26 IDT" duration-ms="103778">
+  <suite started-at="2023-05-28T19:16:47 IDT" name="Suite" finished-at="2023-05-28T19:18:32 IDT" duration-ms="105223">
     <groups>
     </groups>
-    <test started-at="2023-05-28T19:12:43 IDT" name="Digital-Form preview: Buttons [form name: AutoButtonStepsTest]" finished-at="2023-05-28T19:14:26 IDT" duration-ms="103778">
+    <test started-at="2023-05-28T19:16:47 IDT" name="Digital-Form preview: Buttons [form name: AutoButtonStepsTest]" finished-at="2023-05-28T19:18:32 IDT" duration-ms="105223">
       <class name="test.auto.ficxqa.PreviewForms">
-        <test-method is-config="true" signature="setup()[pri:0, instance:test.auto.ficxqa.PreviewForms@59309333]" started-at="2023-05-28T19:12:24 IDT" name="setup" finished-at="2023-05-28T19:12:43 IDT" duration-ms="18226" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:test.auto.ficxqa.PreviewForms@59309333]" started-at="2023-05-28T19:16:32 IDT" name="setup" finished-at="2023-05-28T19:16:47 IDT" duration-ms="15124" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="previewButtons()[pri:0, instance:test.auto.ficxqa.PreviewForms@59309333]" started-at="2023-05-28T19:12:43 IDT" name="previewButtons" finished-at="2023-05-28T19:14:26 IDT" duration-ms="103377" status="PASS">
+        <test-method signature="previewButtons()[pri:0, instance:test.auto.ficxqa.PreviewForms@59309333]" started-at="2023-05-28T19:16:47 IDT" name="previewButtons" finished-at="2023-05-28T19:18:32 IDT" duration-ms="104810" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- previewButtons -->
-        <test-method is-config="true" signature="end()[pri:0, instance:test.auto.ficxqa.PreviewForms@59309333]" started-at="2023-05-28T19:14:26 IDT" name="end" finished-at="2023-05-28T19:14:26 IDT" duration-ms="182" status="PASS">
+        <test-method is-config="true" signature="end()[pri:0, instance:test.auto.ficxqa.PreviewForms@59309333]" started-at="2023-05-28T19:18:32 IDT" name="end" finished-at="2023-05-28T19:18:32 IDT" duration-ms="170" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- end -->

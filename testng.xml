@@ -11,7 +11,7 @@
 			</class>
 		</classes>
 	</test>
-	<!-- 
+	
 	<test name="Digital-Form preview: Steps [form name: AutoSteps]" preserve-order="true">
 		<classes>
 			<class name="test.auto.ficxqa.PreviewForms">
@@ -103,5 +103,5 @@
 			</class>
 		</classes>
 	</test> 
-	--> 
+
 </suite> 

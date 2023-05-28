@@ -572,11 +572,9 @@ public class FormEditorObjects extends BasePage {
 		Thread.sleep(600);
 		try{
 			field.click();
-			System.out.println(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
 			ExtentManager.fail(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
 		}catch(Exception e){
 			ExtentManager.pass("Rule Passed: could not click [field disabled/hidden]");
-			System.out.println("Rule Passed: could not click [field disabled/hidden]");
 		}
 	}
 
