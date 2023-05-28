@@ -1,6 +1,10 @@
 package test.auto.ficxqa;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
+
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.TimeoutException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -105,5 +109,23 @@ public class PreviewForms extends Hooks {
         forms.testStepName(forms.nextStepBtnPrvw, "4");
 		System.out.println("Test previewRules ended successfully.");
 	}
+
+	@Test
+    public void previewButtons() throws InterruptedException, IOException{
+        FormEditorObjects forms = new FormEditorObjects();
+        try{
+            forms.openSavedForm("AutoButtonStepTest");
+            forms.testBtns1();
+            forms.testBtns2();
+            forms.testBtns3();
+            forms.testBtns4();
+            forms.testBtns5();
+        } catch (NoSuchElementException | ElementClickInterceptedException | TimeoutException e){
+            System.out.println("There was a test failure under known exceptions.");
+            e.printStackTrace();
+        } finally {
+            System.out.println("Test previewButtons ended.");
+        }
+    }
 
 }

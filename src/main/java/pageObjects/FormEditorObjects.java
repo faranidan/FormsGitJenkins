@@ -2,6 +2,7 @@ package pageObjects;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.devtools.DevTools;
@@ -161,9 +163,38 @@ public class FormEditorObjects extends BasePage {
 			String child = iterate.next(); 
 			if (!MainWindow.equalsIgnoreCase(child)) { 
 				getDriver().switchTo().window(child);
-				ExtentManager.pass("Switched succesfully to second tab. Now previewing form.");
+				ExtentManager.pass("Switched succesfully to second tab");
 			}
 		}
+	}
+	/* 
+	public void changeTab(Boolean close) throws InterruptedException, IOException {
+		Thread.sleep(1200);
+		ArrayList<String> tabsList = new ArrayList<>(getDriver().getWindowHandles()); // tabsList is static
+		if (close == true){
+			getDriver().switchTo().window(tabsList.get(1));	// 2nd tab
+			getDriver().close();
+			getDriver().switchTo().window(tabsList.get(0));
+		} else {
+			getDriver().switchTo().window(tabsList.get(1));
+		} 
+		
+	}
+	*/
+
+	public void changeTab(Integer tabNmbr, Boolean close) throws InterruptedException, IOException {
+		Thread.sleep(1200);
+		//loaderGone();
+		//waitForInvisibility(loaderPrvw, Duration.ofSeconds(3));
+		ArrayList<String> tabsList = new ArrayList<>(getDriver().getWindowHandles()); // tabsList is static
+		if (close == true){
+			getDriver().switchTo().window(tabsList.get(tabNmbr));	// 2nd tab
+			getDriver().close();
+			getDriver().switchTo().window(tabsList.get(tabNmbr-1));
+		} else {
+			getDriver().switchTo().window(tabsList.get(tabNmbr));
+		} 
+		
 	}
 
 	public void previewSum(Integer var1, Integer var2) throws InterruptedException, IOException {
@@ -216,7 +247,7 @@ public class FormEditorObjects extends BasePage {
 				String responseBody = devTools.send(Network.getResponseBody(id[0])).getBody();
 				System.out.println("Response url: " + res.getUrl());
 				System.out.println("Response status: " + res.getStatus());
-				System.out.println("Response body: " + responseBody);
+				System.out.println("Response body: " + responseBody.toString());
 			}
 		});
 		ExtentManager.pass("Response of url " + url + " recorded to console logs");
@@ -536,15 +567,16 @@ public class FormEditorObjects extends BasePage {
 			ExtentManager.fail("Failed: Hidden rule DID NOT clear phn Field");
 		}
 	}
-	
 
 	public void testRulesDisabled(WebElement field) throws InterruptedException{
 		Thread.sleep(600);
 		try{
 			field.click();
+			System.out.println(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
 			ExtentManager.fail(field.getText()+" - Rule Failed: clicked [field not disabled/hidden]");
 		}catch(Exception e){
 			ExtentManager.pass("Rule Passed: could not click [field disabled/hidden]");
+			System.out.println("Rule Passed: could not click [field disabled/hidden]");
 		}
 	}
 
@@ -559,13 +591,12 @@ public class FormEditorObjects extends BasePage {
 	}
 
 	public void testErrorMsg(String type) throws InterruptedException{
-		Thread.sleep(600);
 		try{
 			errorMsgPrvw.isDisplayed();
-			ExtentManager.pass(type+"field- Rule Passed: Error msg appeared");
+			ExtentManager.pass(type+"- Passed. Error msg appeared");
 		} catch (Exception e){
-			ExtentManager.fail(type+"field- Rule Failed: Error msg did not appear");
-		}
+			ExtentManager.fail(type+"- Failed. Error msg did not appear");
+		} 
 	}
 
 	public void editStep(WebElement step, String nextStepName, String backStepName, boolean add) {
@@ -603,13 +634,242 @@ public class FormEditorObjects extends BasePage {
         }
 	}
 
+	public String getCurrentUrl() throws InterruptedException, IOException{
+		return getDriver().getCurrentUrl();
+	}
+	
+	public void testBtns1() throws InterruptedException, IOException{
+		System.out.println("Started method testBtns1: btns steps w/o req, hidden steps, rules. testing rules, validations, finish + hidden");
+		ExtentManager.log("Started method testBtns1: btns steps w/o req, hidden steps, rules. testing rules, validations, finish + hidden");
+		startBtnsPrvwTest();
+		testBtnReqMsg(btn1PrvwBtns, "btn1");
+		testBtnReqMsg(btn2PrvwBtns, "btn2");
+		testBtnReqMsg(btn4PrvwBtns, "btn4");
+		testBtnReqMsg(nextStepBtnPrvw, "Next Step");
+		ExtentManager.pass("Passed: All required Step buttons do validation");
+		btn3PrvwBtns.click();
+		testHiddenStep(backStepBtnPrvw, secondStepBtn);
+		backStepBtnPrvw.click();
+		reqStep3Prvw.sendKeys("a");
+		testBtnReqMsg(btn3PrvwBtns, "btn3 rule: Required");
+		hideBlkVerPrvw.sendKeys("1");
+		ExtentManager.pass("Passed: Rules Required & Hide to buttons");
+		Thread.sleep(660);
+		btn1PrvwBtns.click();
+		backStepBtnPrvw.click();
+		btn2PrvwBtns.click();
+        testFormSubmitted();
+		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
+		changeTab(1, true);
+		System.out.println("Ended method testBtns1 successfully.");
+		ExtentManager.log("Ended method testBtns1 successfully.");
+	}
+
+	public void testBtns2() throws InterruptedException, IOException{
+		System.out.println("Started method testBtns2: btn step+finish, testing validations + finish");
+		ExtentManager.log("Started method testBtns2: btn step+finish, testing validations + finish");
+		startBtnsPrvwTest();
+        phoneNumberPrvw.sendKeys("1");
+        btn4PrvwBtns.click();
+        testFormSubmitted();
+		ExtentManager.pass("Passed: Step[Finish Form] submitted form");
+        changeTab(1, true);
+		System.out.println("Ended method testBtns2 successfully.");
+		ExtentManager.log("Ended method testBtns2 successfully.");
+	}
+
+	public void testBtns3() throws InterruptedException, IOException{
+		ExtentManager.log("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
+		System.out.println("Started method testBtns3: btns- url new tab [req,finish], testing params & validations");
+		startBtnsPrvwTest();
+        phoneNumberPrvw.sendKeys("1");
+        nextStepBtnPrvw.click();
+		testBtnReqMsg(btn5PrvwBtns, "btn5");
+		testBtnReqMsg(btn7PrvwBtns, "btn7");
+		testBtnReqMsg(btn8PrvwBtns, "btn8");
+		ExtentManager.pass("Passed: All required Buttons with URL[newTab] require validation");
+		String GUID = getGuid();
+		btn6PrvwBtns.click();
+		testUrlParams(GUID, true);
+		lt1PrvwBtns.sendKeys("Verrrrrrryyyy Looonnggg Textttt");
+		btn5PrvwBtns.click();
+		testUrlParams(GUID, true);
+		btn7PrvwBtns.click();
+		testUrlParams(GUID, true);
+		changeTab(1, true);
+		System.out.println("Ended method testBtns3 successfully.");
+		ExtentManager.log("Ended method testBtns3 successfully.");
+	}
+
+	public void testBtns4() throws IOException, InterruptedException{
+		ExtentManager.log("Started method testBtns4: btns- url same tab [req,finish], testing params, finish & validations");
+		System.out.println("Started method testBtns4: btns- url same tab [req,finish], testing params, finish & validations");
+		startBtnsPrvwTest();
+		btn3PrvwBtns.click();
+		testBtnReqMsg(btn9PrvwBtns, "btn9");
+		testBtnReqMsg(btn10PrvwBtns, "btn10");
+		testBtnReqMsg(btn11PrvwBtns, "btn11");
+		testBtnReqMsg(btn11PrvwBtns, "btn12");
+		ExtentManager.pass("Passed: All type of Buttons with URL[sameTab] require validation");
+		CheckboxBtnsPrvw.click();
+		String GUID = getGuid();
+		btn9PrvwBtns.click();
+		testUrlParams(GUID, false);
+		
+		startBtnsPrvwTest();
+		btn3PrvwBtns.click();
+		CheckboxBtnsPrvw.click();
+		String GUID2 = getGuid();
+		btn11PrvwBtns.click();
+		// testFormSubmitted(); // not working. does not catch the moment of change. Maybe in a while loop
+		testUrlParams(GUID2, false);
+		System.out.println("Ended method testBtns4 successfully.");
+		ExtentManager.log("Ended method testBtns4 successfully.");
+	}
+	
+	public void testBtns5() throws InterruptedException, IOException {
+		ExtentManager.log("Started method testBtns5: btns rules: testing all rules & required validations");
+		System.out.println("Started method testBtns5: btns rules: testing all rules & required validations");
+		startBtnsPrvwTest();
+		step4Btn.click();
+		Thread.sleep(600);
+		testRulesEnabled(btn13PrvwBtns);
+		testRulesEnabled(btn14PrvwBtns);
+		testRulesDisabled(btn15PrvwBtns);
+		testRequiredBtnRule(btn16PrvwBtns, false);
+		ExtentManager.pass("Passed: All rules are inactive prior to activation");
+		activateRuleBtnPrvw.sendKeys("1");
+		testRulesDisabled(btn13PrvwBtns);
+		testRulesDisabled(btn14PrvwBtns);
+		testRulesEnabled(btn15PrvwBtns);
+		testRequiredBtnRule(btn16PrvwBtns, true);
+		ExtentManager.pass("Passed: All rules are active after activation");
+		System.out.println("Ended method testBtns5 successfully.");
+		ExtentManager.log("Ended method testBtns5 successfully.");
+	}
+
+	public void testRequiredBtnRule (WebElement button, boolean shouldBeReq){
+		if (shouldBeReq == true) {
+			if (button.getText().equals("required*")) {
+				ExtentManager.pass("Passed: Required rule turned on for button");
+			} else {
+				ExtentManager.fail("Failed: button name: "+ button.getText());
+			} 
+		} else {
+			if (button.getText().equals("required")) {
+				ExtentManager.pass("Passed: Required rule not turned on for button");
+			} else {
+				ExtentManager.fail("Failed: button name: "+ button.getText());
+			}
+		}
+	}
+
+	public void testFormSubmitted() throws InterruptedException, IOException{
+		try{
+			waitForClick(formEndImg, Duration.ofSeconds(6));
+			ExtentManager.pass("Passed. Form submitted successfully.");
+		} catch (NoSuchElementException | TimeoutException e){
+			ExtentManager.fail("Failed: Did not get to Form submitted. Url: "+getDriver().getCurrentUrl());
+			e.printStackTrace();
+		}
+	}
+
+	public void testUrlParams(String Guid, boolean newTab) throws InterruptedException, IOException{
+		Thread.sleep(2400);
+		if(newTab==true){
+			changeTab(2, false);
+			if (getDriver().getCurrentUrl().equals("https://www.google.com/?guid="+Guid+"&formID=2000312")){
+				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID");
+			} else {
+				ExtentManager.fail("Failed: Method testUrlParams. URL is: "+getDriver().getCurrentUrl());
+			}
+			changeTab(2, true);
+		} else {
+			if (getDriver().getCurrentUrl().equals("https://www.google.com/?guid="+Guid+"&formID=2000312")){
+				ExtentManager.pass("Passed: Method testUrlParams, link opened with currect GUID + fromID");
+			} else {
+				ExtentManager.fail("Failed: Method testUrlParams. URL is: "+getDriver().getCurrentUrl());
+			}
+			changeTab(1, true);
+		}	
+	}
+
+	public void testHiddenStep(WebElement step, WebElement btn){
+		try{
+			step.click();
+			ExtentManager.fail("Failed. Back Step should be hidden");
+		} catch(NoSuchElementException e){
+			ExtentManager.pass("Passed. Back Step is hidden. Clicking replacing btn");
+			btn.click();
+		}
+	}
+
+	public void startBtnsPrvwTest() throws InterruptedException, IOException{
+		waitForClick(getPreviewForm(), Duration.ofSeconds(6));
+		getPreviewForm().click();
+        changeTab(1, false);
+		waitForClick(buttonsStep1Hdr, Duration.ofSeconds(3));
+		ExtentManager.pass("Previewed the form & changed tab");
+	}
+
+	public String getGuid() throws InterruptedException, IOException{
+		String FormUrl = getDriver().getCurrentUrl();
+		String[] Split = FormUrl.split("d=");
+		ExtentManager.pass("Got form GUID");
+		return Split[1];
+	}
+
+	public void testBtnReqMsg(WebElement btn, String btnName) throws InterruptedException, IOException{
+		btn.click();
+		Thread.sleep(1200);
+		testErrorMsg(btnName+" Required validation");
+	}
+
+
+	//loader!
+	@FindBy (css = ".loading-anim-btn") public WebElement loaderPrvw;
+	@FindBy (xpath = "//*[name()='circle' and contains(@class,'v-progress')]") public WebElement loaderStudio;
+
+	//preview buttons
+	@FindBy (xpath = "//div[contains(text(),'step[4]')]") public WebElement step4Btn;	
+	@FindBy (xpath = "//div[contains(text(),'required')]") public WebElement btn16PrvwBtns;	
+	@FindBy (xpath = "//div[contains(text(),'enabled')]") public WebElement btn15PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'disabled')]") public WebElement btn14PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'hidden')]") public WebElement btn13PrvwBtns;
+	@FindBy (css = "input[aria-label='activate rule ']") public WebElement activateRuleBtnPrvw;
+
+	@FindBy (xpath = "//label[normalize-space()='Checkbox*']") public WebElement CheckboxBtnsPrvw;
+	@FindBy (xpath = "//div[contains(text(),'4th Step*')]") public WebElement btn12PrvwBtns;	
+	@FindBy (xpath = "//div[contains(text(),'Finish url sameTab')]") public WebElement btn11PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'url Req sameTab*')]") public WebElement btn10PrvwBtns;
+	@FindBy (xpath = "//div[@class='v-btn__content'][normalize-space()='url sameTab']") public WebElement btn9PrvwBtns;
+	
+	@FindBy (xpath = "//div[@class='v-btn__content'][normalize-space()='2nd Step']") public WebElement secondStepBtn;
+	@FindBy (xpath = "//textarea[@aria-label='Long Text ']") public WebElement lt1PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'Finish url newTab notReq')]") public WebElement btn8PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'Finish url newTab req*')]") public WebElement btn7PrvwBtns;
+	@FindBy (xpath = "//div[@class='v-btn__content'][normalize-space()='url newTab notReq']") public WebElement btn6PrvwBtns;
+	@FindBy (xpath = "//div[@class='v-btn__content'][normalize-space()='url newTab req*']") public WebElement btn5PrvwBtns;
+	@FindBy (css = "h2[aria-label='url newTab options']") public WebElement buttonsStep2Hdr;
+
+	@FindBy (xpath = "//h2[normalize-space()='req + step']") public WebElement buttonsStep1Hdr;
+	@FindBy (xpath = "//div[contains(text(),'req+step[2]')]") public WebElement btn1PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'req+step+finish')]") public WebElement btn2PrvwBtns;
+	@FindBy (xpath = "//div[contains(text(),'step[3]')]") public WebElement btn3PrvwBtns;
+	@FindBy (xpath = "//div[@class='v-btn__content'][normalize-space()='step+finish']") public WebElement btn4PrvwBtns;
+	@FindBy (css = "input[aria-label='req step[3] ']") public WebElement reqStep3Prvw;
+	@FindBy (css = "input[aria-label='Phone Number ']") public WebElement phoneNumberPrvw;
+	@FindBy (css = "input[aria-label='hide block verifications ']") public WebElement hideBlkVerPrvw;
+	
 	//preview steps
 	@FindBy (xpath = "//button[@class='v-btn v-btn--block theme--light blue done-btn white--text']//div[@class='v-btn__content']")
 	public WebElement doneStepBtnPrvw;
 	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl next-step white--text']")
 	public WebElement nextStepBtnPrvw;
-	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl prev-step white--text']")
+	@FindBy (css = "button[class='v-btn v-btn--block theme--light blue content-rtl prev-step white--text'] div[class='v-btn__content']")
 	public WebElement backStepBtnPrvw;
+	// new backPrvwBtn "button[class='v-btn v-btn--block theme--light blue content-rtl prev-step white--text'] div[class='v-btn__content']"
+	// old backPrvwBtn "button[class='v-btn v-btn--block theme--light blue content-rtl prev-step white--text']"
 
 	//build steps
 	@FindBy (css = "span[placeholder='Step Title']") public WebElement step1;

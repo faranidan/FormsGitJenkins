@@ -103,7 +103,7 @@
                     <div class="method-list-content passed suite-Suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Suite" title="test.auto.ficxqa.PreviewForms" class="method navigator-link" hash-for-method="previewfileUpload">previewfileUpload</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Suite" title="test.auto.ficxqa.PreviewForms" class="method navigator-link" hash-for-method="previewButtons">previewButtons</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Suite -->
@@ -126,9 +126,9 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="previewfileUpload">
-                  </a> <!-- previewfileUpload -->
-                  <span class="method-name">previewfileUpload</span>
+                  <a name="previewButtons">
+                  </a> <!-- previewButtons -->
+                  <span class="method-name">previewButtons</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -142,16 +142,16 @@
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
-&lt;suite thread-count=&quot;4&quot; parallel=&quot;tests&quot; name=&quot;Suite&quot; guice-stage=&quot;DEVELOPMENT&quot; verbose=&quot;0&quot;&gt;
-  &lt;test thread-count=&quot;4&quot; parallel=&quot;tests&quot; name=&quot;preview of autofileUpload form&quot; verbose=&quot;0&quot;&gt;
+&lt;suite thread-count=&quot;3&quot; parallel=&quot;tests&quot; name=&quot;Suite&quot; guice-stage=&quot;DEVELOPMENT&quot; verbose=&quot;0&quot;&gt;
+  &lt;test thread-count=&quot;3&quot; parallel=&quot;tests&quot; name=&quot;Digital-Form preview: Buttons [form name: AutoButtonStepsTest]&quot; verbose=&quot;0&quot;&gt;
     &lt;classes&gt;
       &lt;class name=&quot;test.auto.ficxqa.PreviewForms&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;previewfileUpload&quot;/&gt;
+          &lt;include name=&quot;previewButtons&quot;/&gt;
         &lt;/methods&gt;
       &lt;/class&gt; &lt;!-- test.auto.ficxqa.PreviewForms --&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- preview of autofileUpload form --&gt;
+  &lt;/test&gt; &lt;!-- Digital-Form preview: Buttons [form name: AutoButtonStepsTest] --&gt;
 &lt;/suite&gt; &lt;!-- Suite --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -163,7 +163,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">preview of autofileUpload form (1 class)</span>
+                <span class="test-name">Digital-Form preview: Buttons [form name: AutoButtonStepsTest] (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -191,14 +191,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'previewfileUpload')
+data.setCell(0, 1, 'previewButtons')
 data.setCell(0, 2, 'test.auto.ficxqa.PreviewForms')
-data.setCell(0, 3, 32057);
+data.setCell(0, 3, 103377);
 window.suiteTableData['Suite']= { tableData: data, tableDiv: 'times-div-Suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 32 seconds</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-Suite">
               </div> <!-- times-div-Suite -->
             </div> <!-- times-div -->
@@ -213,17 +213,21 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">3 ignored methods</span>
+            <span class="header-content">5 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
               <span class="ignored-class-name">test.auto.ficxqa.PreviewForms</span>
               <div class="ignored-methods-div">
+                <span class="ignored-method-name">previewSteps</span>
+                <br/>
                 <span class="ignored-method-name">previewDropdown</span>
                 <br/>
                 <span class="ignored-method-name">previewSum</span>
                 <br/>
-                <span class="ignored-method-name">fileUploadGithub</span>
+                <span class="ignored-method-name">previewfileUpload</span>
+                <br/>
+                <span class="ignored-method-name">previewRules</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -241,12 +245,12 @@ return data;
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-suite before -->
               <div class="test-method">
-                <span class="method-name">previewfileUpload</span>
-                <span class="method-start">19726 ms</span>
+                <span class="method-name">previewButtons</span>
+                <span class="method-start">18450 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-test after">
                 <span class="method-name">end</span>
-                <span class="method-start">51786 ms</span>
+                <span class="method-start">121831 ms</span>
               </div> <!-- configuration-test after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
